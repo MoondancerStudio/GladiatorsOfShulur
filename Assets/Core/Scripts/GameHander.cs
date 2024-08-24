@@ -13,6 +13,9 @@ public class GameHander : MonoBehaviour
     private Tile _tilepref;
 
     [SerializeField]
+    private Tile _obstacle;
+
+    [SerializeField]
     private Transform _cam;
 
     public static event Action playerStateChanged;
@@ -39,17 +42,27 @@ public class GameHander : MonoBehaviour
 
                 spawned.Init(offset);
 
-                tiles.TryAdd(new Vector2(x, y), spawned);
 
                 if (x == 4 && y == 9)
                 {
                     Debug.Log("player");
-                    GameObject.Find("player").gameObject.transform.position = new Vector3(x,y, -0.5f);
+                    GameObject.Find("player").gameObject.transform.position = new Vector3(x, y, -0.5f);
+                    GameObject.Find("player").GetComponent<Unit>().init(false, new Vector2(x, y));
                     GameObject.Find("enemy").gameObject.transform.position = new Vector3(4, 4, -2.5f);
                     GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = false;
-
+                  //  GameObject.Find("enemy").transform.Find("Canvas (1)").transform.Find("Scrollbar").transform.position = new Vector3(4, 1, -2.5f);
                     //   player.init(false, new Vector2(x, y));
                 }
+
+                if(UnityEngine.Random.Range(0,5) == 1)
+                {
+                    Tile obstacle = Instantiate(_obstacle, new Vector3(x, y, -0.5f), Quaternion.identity);
+                    obstacle.name = "Obstacle " + x + " " + y;
+                    spawned.tag = "obstacle";
+                    obstacle.tag = "obstacle";
+                    obstacle.vec = new Vector2(x, y);
+                }
+                tiles.TryAdd(new Vector2(x, y), spawned);
 
             }
         }
