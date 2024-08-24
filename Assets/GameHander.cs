@@ -44,7 +44,7 @@ public class GameHander : MonoBehaviour
                 if (x == 4 && y == 9)
                 {
                     Debug.Log("player");
-                    GameObject.Find("player").gameObject.transform.position = new Vector2(x,y);
+                    GameObject.Find("player").gameObject.transform.position = new Vector3(x,y, -0.5f);
                     GameObject.Find("enemy").gameObject.transform.position = new Vector3(4, 4, -2.5f);
                     GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = false;
 

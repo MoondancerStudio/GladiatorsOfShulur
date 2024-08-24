@@ -23,6 +23,7 @@ public class Tile : MonoBehaviour
         _renderer.color = isWhite ? Color.blue : Color.white;
     }
 
+    [System.Obsolete]
     void OnMouseDown()
     {
         if (_highlight.activeSelf)
@@ -36,29 +37,23 @@ public class Tile : MonoBehaviour
                 Debug.Log(player.x + " " + player.y);
                 _highlight.SetActive(false);
                // animate(GameObject.Find("player").gameObject, vec);
-                GameObject.Find("player").gameObject.transform.position = new Vector2(vec.x, vec.y);
+                GameObject.Find("player").gameObject.transform.position = new Vector3(vec.x, vec.y, -0.5f);
                 GameObject.Find("player").GetComponent<Unit>().pos = new Vector2(vec.x, vec.y);
                 GameObject.Find("player").GetComponent<Unit>().moves.Clear();
                 GameObject.Find("GameHandler").GetComponent<GameHander>().isMoveHighlighted = false;
-                timer += Time.deltaTime;
-                if (timer > delay)
+
+                Vector3 newPlayerPos = GameObject.Find("player").gameObject.transform.position;
+                if (enemy != null)
                 {
-                    Vector3 newPlayerPos = GameObject.Find("player").gameObject.transform.position;
-                    if (enemy != null)
+                    if (enemy.x == newPlayerPos.x && newPlayerPos.y == enemy.y)
                     {
-                        if (enemy.x == newPlayerPos.x && newPlayerPos.y == enemy.y)
-                        {
-                            GameObject.Find("player").GetComponent<Unit>().Doattack(GameObject.Find("enemy").GetComponent<Unit>());
+                        GameObject.Find("player").GetComponent<Unit>().Doattack(GameObject.Find("enemy").GetComponent<Unit>());
 
-                            GameObject.Find("player").GetComponent<Unit>().pos = new Vector2(player.x, player.y);
-                            GameObject.Find("player").gameObject.transform.position = new Vector2(player.x, player.y);
-                            GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = true;
-                        }
+                        GameObject.Find("player").GetComponent<Unit>().pos = new Vector2(player.x, player.y);
+                        GameObject.Find("player").gameObject.transform.position = new Vector3(player.x, player.y, -0.5f);
+                        GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = true;
                     }
-
-                    timer -= delay;
                 }
-
 
                 foreach (KeyValuePair<Vector2, Tile> item in GameObject.Find("GameHandler").GetComponent<GameHander>().tiles)
                 {
