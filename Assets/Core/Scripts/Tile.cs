@@ -1,27 +1,31 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField]
-    private Color _black, _white;
-
     [SerializeField]
     private SpriteRenderer _renderer;
 
     [SerializeField]
     public GameObject _highlight;
 
-    public Vector2 vec;
-
-    public float delay = 20.0f;
-    float timer = 0.0f;
+    [SerializeField]
+    public GameObject _hover;
 
     public void Init(bool isWhite)
     {
         _renderer.color = isWhite ? Color.blue : Color.white;
+    }
+
+    void OnMouseEnter()
+    {
+        _hover.SetActive(true);
+    }
+
+    void OnMouseExit()
+    {
+        _hover.SetActive(false);
     }
 
     [System.Obsolete]
@@ -29,66 +33,41 @@ public class Tile : MonoBehaviour
     {
         if (_highlight.activeSelf)
         {
-            Vector3 player = GameObject.Find("player").gameObject.transform.position;
+            GameObject player = GameObject.Find("player");
             if (player != null)
             {
-
-
-                Debug.Log(player.x + " " + player.y);
-                _highlight.SetActive(false);
-               // animate(GameObject.Find("player").gameObject, vec);
-                GameObject.Find("player").gameObject.transform.position = new Vector3(vec.x, vec.y, -0.5f);
-                GameObject.Find("player").GetComponent<Unit>().moves.Clear();
-
-                Vector3 newPlayerPos = GameObject.Find("player").gameObject.transform.position;
                 Vector3 enemy = GameObject.Find("enemy").gameObject.transform.position;
                 if (enemy != null)
                 {
-                    if (enemy.x == newPlayerPos.x && newPlayerPos.y == enemy.y)
+                    
+                    if (enemy.x == transform.position.x && transform.position.y == enemy.y)
                     {
                         GameObject.Find("player").GetComponent<Unit>().Doattack(GameObject.Find("enemy").GetComponent<Unit>());
-                        GameObject.Find("player").gameObject.transform.position = new Vector3(player.x, player.y, -0.5f);
                         GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = true;
                     }
+                    else
+                    {
+                        GameObject.Find("player").GetComponent<Unit>().pos = new Vector2(transform.position.x, transform.position.y);
+                    }
                 }
-
-                GameObject.Find("player").GetComponent<Unit>().fillPossibleMoves();
-                foreach (KeyValuePair<Vector2, Tile> item in GameObject.Find("GameHandler").GetComponent<GameHander>().tiles)
-                {
-                    Tile tile = item.Value.ConvertTo<Tile>();
-
-                    if (tile._highlight.activeSelf)
-                        tile._highlight.SetActive(false);
-                }
-                GameObject.Find("GameHandler").GetComponent<GameHander>().isMoveHighlighted = false;
+                GameObject.Find("player").GetComponent<Unit>().move = true;
+                tilePossibleMovesDeactivate();
             }
         }
     }
 
-    void animate(GameObject p, Vector2 vec)
+    void tilePossibleMovesDeactivate()
     {
-        while (p.transform.position.x < vec.x)
+        foreach (KeyValuePair<Vector2, Tile> item in GameObject.Find("GameHandler").GetComponent<GameHander>().tiles)
         {
-            p.transform.position = new Vector2(p.transform.position.x + 0.01f, p.transform.position.y);
-        }
+            Tile tile = item.Value.ConvertTo<Tile>();
 
-        while (p.transform.position.x > vec.x)
-        {
-            p.transform.position = new Vector2(p.transform.position.x - 0.01f, p.transform.position.y);
-        }
-
-        while (p.transform.position.y < vec.y)
-        {
-            p.transform.position = new Vector2(p.transform.position.x, p.transform.position.y + 0.01f);
-        }
-
-        while (p.transform.position.y > vec.y)
-        {
-            p.transform.position = new Vector2(p.transform.position.x, p.transform.position.y - 0.01f);
+            if (tile._highlight.activeSelf)
+                tile._highlight.SetActive(false);
         }
     }
+
     void Update()
     {
-        timer += Time.deltaTime;
     }
 }

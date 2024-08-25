@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using UnityEngine;
 
 public class GameHander : MonoBehaviour
@@ -17,8 +15,6 @@ public class GameHander : MonoBehaviour
 
     [SerializeField]
     private Transform _cam;
-
-    public static event Action playerStateChanged;
 
     public Dictionary<Vector2, Tile> tiles;
 
@@ -36,34 +32,35 @@ public class GameHander : MonoBehaviour
             {
                 Tile spawned = Instantiate(_tilepref, new Vector3(x, y), Quaternion.identity);
                 spawned.name = "Tile " + x + " " + y;
-                spawned.vec = new Vector2(x, y);
                 spawned.tag = "tile";
                 bool offset = (x + y) % 2 == 0;
 
                 spawned.Init(offset);
 
-
                 if (x == 4 && y == 9)
                 {
-                    Debug.Log("player");
+                    //Place player unit
                     GameObject.Find("player").gameObject.transform.position = new Vector3(x, y, -0.5f);
                     GameObject.Find("player").GetComponent<Unit>().init(false, new Vector2(x, y));
+
+                    //Place enemy unit
                     GameObject.Find("enemy").gameObject.transform.position = new Vector3(4, 4, -2.5f);
                     GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = false;
-                  //  GameObject.Find("enemy").transform.Find("Canvas (1)").transform.Find("Scrollbar").transform.position = new Vector3(4, 1, -2.5f);
-                    //   player.init(false, new Vector2(x, y));
                 }
 
-                if(UnityEngine.Random.Range(0,5) == 1)
+                if(UnityEngine.Random.Range(0,5) == 1 && 
+                    GameObject.Find("player").gameObject.transform.position.x != x && 
+                    GameObject.Find("player").gameObject.transform.position.y != y &&
+                     GameObject.Find("enemy").gameObject.transform.position.x != x &&
+                    GameObject.Find("enemy").gameObject.transform.position.y != y)
                 {
                     Tile obstacle = Instantiate(_obstacle, new Vector3(x, y, -0.5f), Quaternion.identity);
                     obstacle.name = "Obstacle " + x + " " + y;
                     spawned.tag = "obstacle";
                     obstacle.tag = "obstacle";
-                    obstacle.vec = new Vector2(x, y);
                 }
-                tiles.TryAdd(new Vector2(x, y), spawned);
 
+                tiles.TryAdd(new Vector2(x, y), spawned);
             }
         }
         _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
@@ -83,14 +80,18 @@ public class GameHander : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Unit player = GameObject.Find("player").GetComponent<Unit>();
+        if (!isMoveHighlighted) 
+        { 
+            Unit player = GameObject.Find("player").GetComponent<Unit>();
 
-        if (player != null && !isMoveHighlighted) 
-        {
-            if (player.moves.Count > 0){
-                foreach (var m in player.moves)
+            if (player != null)
+            {
+                if (player.moves.Count > 0)
                 {
-                    getTile(m);
+                    foreach (var m in player.moves)
+                    {
+                        getTile(m);
+                    }
                 }
             }
         }
