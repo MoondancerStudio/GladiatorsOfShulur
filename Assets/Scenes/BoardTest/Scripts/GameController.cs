@@ -38,7 +38,7 @@ namespace Scenes.BoardTest.Scripts
         {
             return (x + y) % 2 != 0;
         }
-        
+
         private void PositionCamera()
         {
             cam.position = new Vector3(sizeX / 2f - 0.5f, sizeY / 2f -0.5f, -10);
