@@ -13,7 +13,7 @@ enum UnitType
 
 public class Unit : MonoBehaviour
 {
-    float damage = 5.0f;
+    float damage = 10.0f;
     float luck = 50.0f;
 
     public float hp = 100.0f;
@@ -21,6 +21,9 @@ public class Unit : MonoBehaviour
     public Vector2 pos;
     public List<Vector2> possibleMoves;
     public bool move;
+
+    [SerializeField]
+    public GameObject _hover;
 
     public void init(bool team, Vector2 pos)
     {
@@ -45,15 +48,15 @@ public class Unit : MonoBehaviour
     {
         possibleMoves.ForEach(possibleMove =>
         {
-            Tile tile;
-
             Vector3 newPos = new Vector2(possibleMove.x + transform.position.x, possibleMove.y + transform.position.y);
-            if (GameObject.Find("GameHandler").GetComponent<GameHander>().tiles.TryGetValue(newPos, out tile))
+            Tile tile = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(newPos);
+
+            if (tile != null)
             {
                 if (tile.transform.tag.Equals("tile"))
                 {
                     moves.Add(newPos);
-                    Debug.Log("collect moves");
+                   // Debug.Log("collect moves");
                 }
             }
         });
@@ -65,20 +68,62 @@ public class Unit : MonoBehaviour
         if(unit != null)
         {
             unit.hp -= damage;
-            GameObject.Find("enemy").transform.Find("Canvas (1)").transform.Find("Scrollbar").GetComponent<Scrollbar>().size -= unit.damage * 0.1f;
+            GameObject.Find("enemy").transform.Find("Canvas (1)").transform.Find("Scrollbar").GetComponent<Scrollbar>().size -= unit.damage * 0.01f;
+          
+            if(unit.hp <= 0)
+            {
+                Destroy(GameObject.Find("enemy"));
+            }
         }
     }
 
+    [Obsolete]
     void OnMouseDown()
     {
-        if (moves.Count == 0 && !move)
+        if (moves.Count == 0 && !move && transform.name.Equals("player"))
         {
            updateMove();
+        } else
+        {
+            Vector3 enemy = (Vector3)(GameObject.Find("enemy")?.gameObject.transform.position);
+
+            if (enemy.x == transform.position.x && transform.position.y == enemy.y)
+            {
+                GameObject.Find("player").GetComponent<Unit>().Doattack(GameObject.Find("enemy").GetComponent<Unit>());
+                GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = true;
+
+                Tile t = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(transform.position);
+                if (t != null)
+                {
+                    t.tilePossibleMovesDeactivate();
+                    GameObject.Find("player").GetComponent<Unit>().move = true;
+                }
+            }
         }
     }
 
+    void OnMouseEnter()
+    {
+        _hover.SetActive(true);
+    }
+
+    void OnMouseExit()
+    {
+        _hover.SetActive(false);
+    }
+
+    [Obsolete]
     void Update()
     {
+        GameObject enemy = GameObject.Find("enemy");
+        if (enemy != null && enemy!.GetComponent<ParticleSystem>().isEmitting)
+        {
+            if ((int)Time.time % 3 == 0)
+            {
+                enemy.GetComponent<ParticleSystem>().enableEmission = false;
+            }
+        }   
+
         if (move)
         {
             if (pos.x > transform.position.x)
@@ -92,10 +137,12 @@ public class Unit : MonoBehaviour
 
             if (pos.y < transform.position.y)
                 transform.position = new Vector3(transform.position.x, transform.position.y - 0.01f, -0.5f);
- 
-            if (Math.Abs(pos.y - transform.position.y) < 0.01 && Math.Abs(pos.x - transform.position.x) < 0.01)
+
+
+            // Have to check the two vectors angle, because of unpunctual value
+            if (Vector2.Angle(transform.position, pos) < 0.1f)
             {
-                transform.position = new Vector3((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y), -0.5f);
+                transform.position = new Vector3((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y), -0.1f);
                 move = false;
                 moves.Clear();
                 fillPossibleMoves();

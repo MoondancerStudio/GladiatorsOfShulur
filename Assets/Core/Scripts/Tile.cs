@@ -31,34 +31,22 @@ public class Tile : MonoBehaviour
     [System.Obsolete]
     void OnMouseDown()
     {
+
         if (_highlight.activeSelf)
         {
             GameObject player = GameObject.Find("player");
             if (player != null)
             {
-                Vector3 enemy = GameObject.Find("enemy").gameObject.transform.position;
-                if (enemy != null)
-                {
-                    
-                    if (enemy.x == transform.position.x && transform.position.y == enemy.y)
-                    {
-                        GameObject.Find("player").GetComponent<Unit>().Doattack(GameObject.Find("enemy").GetComponent<Unit>());
-                        GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = true;
-                    }
-                    else
-                    {
-                        GameObject.Find("player").GetComponent<Unit>().pos = new Vector2(transform.position.x, transform.position.y);
-                    }
-                }
+                GameObject.Find("player").GetComponent<Unit>().pos = new Vector2(transform.position.x, transform.position.y);
                 GameObject.Find("player").GetComponent<Unit>().move = true;
                 tilePossibleMovesDeactivate();
             }
         }
     }
 
-    void tilePossibleMovesDeactivate()
+    public void tilePossibleMovesDeactivate()
     {
-        foreach (KeyValuePair<Vector2, Tile> item in GameObject.Find("GameHandler").GetComponent<GameHander>().tiles)
+        foreach (KeyValuePair<Vector2, Tile> item in GameObject.Find("GameHandler").GetComponent<GameHander>().Tiles)
         {
             Tile tile = item.Value.ConvertTo<Tile>();
 

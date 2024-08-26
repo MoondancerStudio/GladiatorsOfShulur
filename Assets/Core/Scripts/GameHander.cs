@@ -16,7 +16,13 @@ public class GameHander : MonoBehaviour
     [SerializeField]
     private Transform _cam;
 
-    public Dictionary<Vector2, Tile> tiles;
+    private Dictionary<Vector2, Tile> tiles;
+
+    public Dictionary<Vector2, Tile> Tiles
+    {
+        get { return tiles; } 
+        set { tiles = value; }  
+    }
 
     public bool isMoveHighlighted = false;
 
@@ -37,24 +43,24 @@ public class GameHander : MonoBehaviour
 
                 spawned.Init(offset);
 
-                if (x == 4 && y == 9)
+                if (x == 2 && y == 4)
                 {
                     //Place player unit
-                    GameObject.Find("player").gameObject.transform.position = new Vector3(x, y, -0.5f);
+                    GameObject.Find("player").gameObject.transform.position = new Vector3(x, y, -0.1f);
                     GameObject.Find("player").GetComponent<Unit>().init(false, new Vector2(x, y));
 
                     //Place enemy unit
-                    GameObject.Find("enemy").gameObject.transform.position = new Vector3(4, 4, -2.5f);
+                    GameObject.Find("enemy").gameObject.transform.position = new Vector3(2, 0, -0.5f);
                     GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = false;
                 }
 
-                if(UnityEngine.Random.Range(0,5) == 1 && 
+                if(UnityEngine.Random.Range(0,4) == 1 && 
                     GameObject.Find("player").gameObject.transform.position.x != x && 
                     GameObject.Find("player").gameObject.transform.position.y != y &&
-                     GameObject.Find("enemy").gameObject.transform.position.x != x &&
-                    GameObject.Find("enemy").gameObject.transform.position.y != y)
+                    2 != x &&
+                    0 != y)
                 {
-                    Tile obstacle = Instantiate(_obstacle, new Vector3(x, y, -0.5f), Quaternion.identity);
+                    Tile obstacle = Instantiate(_obstacle, new Vector3(x, y, -0.1f), Quaternion.identity);
                     obstacle.name = "Obstacle " + x + " " + y;
                     spawned.tag = "obstacle";
                     obstacle.tag = "obstacle";
@@ -66,15 +72,21 @@ public class GameHander : MonoBehaviour
         _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
     }
 
-    void getTile(Vector2 pos)
+    public Tile getTile(Vector2 pos)
     {
-        Tile value;
-        if (tiles.TryGetValue(pos, out value))
+        Tile tile;
+        if (tiles.TryGetValue(pos, out tile))
         {
-            value._highlight.SetActive(true);
-            isMoveHighlighted = true;
-            tiles[pos] = value;
+            return tile;
         }
+        return null;
+    }
+
+    void highLightTiles(Tile tile, Vector2 pos)
+    {
+        tile._highlight.SetActive(true);
+        isMoveHighlighted = true;
+        tiles[pos] = tile;
     }
 
     // Update is called once per frame
@@ -90,7 +102,10 @@ public class GameHander : MonoBehaviour
                 {
                     foreach (var m in player.moves)
                     {
-                        getTile(m);
+                        Tile t = getTile(m);
+
+                        if (t != null)
+                            highLightTiles(t, m);         
                     }
                 }
             }
