@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,9 +14,18 @@ public class Tile : MonoBehaviour
     [SerializeField]
     public GameObject _hover;
 
+    public class OnPlayerMoveChangedArgs : EventArgs
+    {
+        public Vector2 position;
+    }
+
+    public event EventHandler<OnPlayerMoveChangedArgs> OnPlayerMoveChanged;
+
     public void Init(bool isWhite)
     {
         _renderer.color = isWhite ? Color.blue : Color.white;
+
+        OnPlayerMoveChanged += Unit.unitInstance.Unit_playerMoveEvent;
     }
 
     void OnMouseEnter()
@@ -31,14 +41,16 @@ public class Tile : MonoBehaviour
     [System.Obsolete]
     void OnMouseDown()
     {
-
         if (_highlight.activeSelf)
         {
             GameObject player = GameObject.Find("player");
             if (player != null)
             {
-                GameObject.Find("player").GetComponent<Unit>().pos = new Vector2(transform.position.x, transform.position.y);
-                GameObject.Find("player").GetComponent<Unit>().move = true;
+                OnPlayerMoveChanged?.Invoke(this, new OnPlayerMoveChangedArgs
+                {
+                    position = new Vector2(transform.position.x, transform.position.y)
+                });
+
                 tilePossibleMovesDeactivate();
             }
         }
