@@ -23,8 +23,7 @@ public class Tile : MonoBehaviour
 
     public void Init(bool isWhite)
     {
-        _renderer.color = isWhite ? Color.blue : Color.white;
-
+        _renderer.color = isWhite ? new Color32(255, 206, 159, 255) : new Color32(255, 244, 195, 255);
         OnPlayerMoveChanged += Unit.unitInstance.Unit_playerMoveEvent;
     }
 
@@ -66,7 +65,6 @@ public class Tile : MonoBehaviour
                 tile._highlight.SetActive(false);
         }
     }
-
     void Update()
     {
     }

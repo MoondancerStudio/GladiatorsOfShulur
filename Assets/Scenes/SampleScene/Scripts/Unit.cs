@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +18,7 @@ enum UnitType
 public class Unit : MonoBehaviour
 {
     float damage = 10.0f;
-    float luck = 50.0f;
+    //float luck = 50.0f;
     float moveSpeed = 5f;
 
     public float hp = 100.0f;
@@ -24,12 +26,16 @@ public class Unit : MonoBehaviour
     public Vector2 pos;
     public List<Vector2> possibleMoves;
     public bool move;
+    private bool outOfStamina;
+    private bool isPlayerTurn;
+
 
     public static Unit unitInstance { get; private set; }
 
     void Awake()
     {
-        unitInstance = this;
+        if(transform.name.Equals("player"))
+              unitInstance = this;
     }
 
     [SerializeField]
@@ -41,8 +47,10 @@ public class Unit : MonoBehaviour
         this.moves = new List<Vector2>();
         this.possibleMoves = new List<Vector2>();
         this.move = false;
-
+        outOfStamina = false;
+        isPlayerTurn = true;
         fillPossibleMoves();
+        
     }
 
     public void Unit_playerMoveEvent(object sender, Tile.OnPlayerMoveChangedArgs e)
@@ -85,11 +93,26 @@ public class Unit : MonoBehaviour
         {
             unit.hp -= damage;
             GameObject.Find("enemy").transform.Find("Canvas (1)").transform.Find("Scrollbar").GetComponent<Scrollbar>().size -= unit.damage * 0.01f;
-          
-            if(unit.hp <= 0)
+            GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size -= unit.damage * 0.05f;
+
+            ColorBlock defaultColorBlock = GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors;
+            defaultColorBlock.colorMultiplier += 0.3f * damage;
+            GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock;
+
+            if (GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size < 0.1)
+            {
+               // defaultColorBlock.normalColor = new Color(255,0,0);
+               // GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock;
+                outOfStamina = true;
+                GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size += Time.deltaTime * 0.3f;
+                defaultColorBlock = GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors;
+                defaultColorBlock.colorMultiplier = 0;
+                GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock ;
+            }
+
+            if (unit.hp <= 0)
             {
                 Tile tile = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(GameObject.Find("enemy").transform.position);
-
                 if (tile != null) 
                 {
                     move = true;
@@ -104,7 +127,7 @@ public class Unit : MonoBehaviour
     {
         if (GameObject.Find("enemy") != null && moves.Contains(GameObject.Find("enemy").transform.position))
         {
-              GameObject.Find("player").GetComponent<Unit>().move = true;
+           GameObject.Find("player").GetComponent<Unit>().move = true;
         }
 
         if (moves.Count == 0 && !move && transform.name.Equals("player"))
@@ -113,12 +136,13 @@ public class Unit : MonoBehaviour
         } else
         {
             Unit player = GameObject.Find("player").GetComponent<Unit>();
-            if (player != null && player.moves.Contains(transform.position))
+            if (player != null && player.moves.Contains(transform.position) && !GameObject.Find("player").GetComponent<Unit>().outOfStamina)
             {
                 GameObject.Find("player").GetComponent<Unit>().Doattack(this);
                 GetComponent<ParticleSystem>().enableEmission = true;
 
                 Tile t = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(player.transform.position);
+
                 if (t != null)
                 {
                     t.tilePossibleMovesDeactivate();
@@ -140,6 +164,32 @@ public class Unit : MonoBehaviour
     [Obsolete]
     void Update()
     {
+
+        if (outOfStamina)
+        {
+            GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size += Time.deltaTime * 0.3f;
+            ColorBlock defaultColorBlock = GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors;
+          //  Debug.Log(Time.time);
+           // Debug.Log((int)Time.time);
+            if (defaultColorBlock.colorMultiplier == 0 && (int)Time.time % 2 == 0)
+            {
+                defaultColorBlock.colorMultiplier = 1.01f;
+            }
+            if (defaultColorBlock.colorMultiplier > 1)
+            {
+                defaultColorBlock.colorMultiplier -= 0.01f;
+                GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock;
+            }
+        }
+
+        if (GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size == 1f && outOfStamina)
+        {
+          //  ColorBlock defaultColorBlock = GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors;
+           // defaultColorBlock.normalColor = new Color(209, 111, 11);
+          //  GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock;
+            outOfStamina = false;    
+        }
+
         GameObject enemy = GameObject.Find("enemy");
         if (enemy != null && enemy!.GetComponent<ParticleSystem>().isEmitting)
         {
@@ -167,6 +217,7 @@ public class Unit : MonoBehaviour
             if (Vector2.Distance(transform.position, pos) < 0.1f)
             {
                 transform.position = new Vector3((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y), -0.1f);
+                //   GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").transform.position = transform;
                 move = false;
                 moves.Clear();
                 fillPossibleMoves();

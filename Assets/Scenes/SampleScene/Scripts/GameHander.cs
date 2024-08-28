@@ -50,8 +50,7 @@ public class GameHander : MonoBehaviour
                     GameObject.Find("player").GetComponent<Unit>().init(false, new Vector2(x, y));
 
                     //Place enemy unit
-                    GameObject.Find("enemy").gameObject.transform.position = new Vector3(2, 0, -0.5f);
-                    GameObject.Find("enemy").transform.Find("Canvas (1)").transform.Find("Scrollbar").transform.position = new Vector3(195, 80, -1.5f);
+                    GameObject.Find("enemy").gameObject.transform.position = new Vector3(2, 0, -0.1f);
                     GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = false;
                 }
 
