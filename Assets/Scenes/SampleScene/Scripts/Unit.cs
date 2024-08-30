@@ -26,6 +26,7 @@ public class Unit : MonoBehaviour
     public Vector2 pos;
     public List<Vector2> possibleMoves;
     public bool move;
+
     private bool outOfStamina;
     private bool isPlayerTurn;
 
@@ -62,10 +63,10 @@ public class Unit : MonoBehaviour
     // Possible moves for default unit, could be vary for different type of unit
     public void fillPossibleMoves()
     {
-        possibleMoves.Add(new Vector2(1,   0));
-        possibleMoves.Add(new Vector2(-1,  0));
-        possibleMoves.Add(new Vector2(0,   1));
-        possibleMoves.Add(new Vector2(0, - 1));
+        possibleMoves.Add(new Vector2( 1,   0));
+        possibleMoves.Add(new Vector2(-1,   0));
+        possibleMoves.Add(new Vector2( 0,   1));
+        possibleMoves.Add(new Vector2( 0, - 1));
     }
 
     public void updateMove()
@@ -80,7 +81,6 @@ public class Unit : MonoBehaviour
                 if (tile.transform.tag.Equals("tile"))
                 {
                     moves.Add(newPos);
-                   // Debug.Log("collect moves");
                 }
             }
         });
@@ -125,17 +125,20 @@ public class Unit : MonoBehaviour
     [Obsolete]
     void OnMouseDown()
     {
-        if (GameObject.Find("enemy") != null && moves.Contains(GameObject.Find("enemy").transform.position))
-        {
-           GameObject.Find("player").GetComponent<Unit>().move = true;
-        }
 
         if (moves.Count == 0 && !move && transform.name.Equals("player"))
         {
            updateMove();
-        } else
+        } 
+        else
         {
             Unit player = GameObject.Find("player").GetComponent<Unit>();
+
+            if (GameObject.Find("enemy") != null && moves.Contains(GameObject.Find("enemy").transform.position))
+            {
+                player.move = true;
+            }
+
             if (player != null && player.moves.Contains(transform.position) && !GameObject.Find("player").GetComponent<Unit>().outOfStamina)
             {
                 GameObject.Find("player").GetComponent<Unit>().Doattack(this);
@@ -175,6 +178,7 @@ public class Unit : MonoBehaviour
             {
                 defaultColorBlock.colorMultiplier = 1.01f;
             }
+
             if (defaultColorBlock.colorMultiplier > 1)
             {
                 defaultColorBlock.colorMultiplier -= 0.01f;
@@ -217,7 +221,6 @@ public class Unit : MonoBehaviour
             if (Vector2.Distance(transform.position, pos) < 0.1f)
             {
                 transform.position = new Vector3((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y), -0.1f);
-                //   GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").transform.position = transform;
                 move = false;
                 moves.Clear();
                 fillPossibleMoves();

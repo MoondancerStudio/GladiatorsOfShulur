@@ -50,7 +50,7 @@ public class GameHander : MonoBehaviour
                     GameObject.Find("player").GetComponent<Unit>().init(false, new Vector2(x, y));
 
                     //Place enemy unit
-                    GameObject.Find("enemy").gameObject.transform.position = new Vector3(2, 0, -0.1f);
+                    GameObject.Find("enemy").gameObject.transform.position = new Vector3(2, 2, -0.1f);
                     GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = false;
                 }
 
@@ -58,7 +58,7 @@ public class GameHander : MonoBehaviour
                     GameObject.Find("player").gameObject.transform.position.x != x && 
                     GameObject.Find("player").gameObject.transform.position.y != y &&
                     2 != x &&
-                    0 != y)
+                    2 != y)
                 {
                     Tile obstacle = Instantiate(_obstacle, new Vector3(x, y, -0.1f), Quaternion.identity);
                     obstacle.name = "Obstacle " + x + " " + y;
