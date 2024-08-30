@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8275338146577350782}
   - component: {fileID: 2505565957865040719}
   - component: {fileID: -2474541231905625287}
+  - component: {fileID: -1954919886919842924}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -113,3 +114,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumHitPoints: 4
   actualHitPoints: 4
+--- !u!114 &-1954919886919842924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590674574379960999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df91cb9d4640dda43be620a7c8c56dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseAttack: 50
+  baseDefense: 50
