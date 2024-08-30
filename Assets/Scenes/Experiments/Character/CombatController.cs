@@ -7,26 +7,59 @@ using UnityEngine;
 
 public class CombatController : MonoBehaviour
 {
+    private DiceRoller dice;
+
+    public void Start()
+    {
+        dice = new DiceRoller();
+    }
+
+    public void OnMouseDown()
+    {
+        Debug.Log("Click...");
+        Combat attacker = this.GetComponentInParent<Combat>();
+        Combat target = GameObject.FindWithTag("target")?.GetComponent<Combat>();
+
+        if (target == null)
+        {
+            throw new Exception("No target found!");
+        }
+        Debug.Log(target.name);
+        Attack(attacker, target);
+    }
+
     public void Attack(Combat attacker, Combat target)
     {
+        Debug.Log("Attack...");
         int attackValue = CalculateAttackValue(attacker);
         int defenseValue = CalculateDefenseValue(target);
+        Debug.Log("Attack: " + attackValue + "; Defense: " + defenseValue);
 
         int damage = CalculateDamage(attackValue, defenseValue);
+        Debug.Log("Damage " + damage);
 
         DoDamage(damage, target);
     }
+    
+
 
     private int CalculateAttackValue(Combat attacker)
     {
         int value = 0;
-        int baseValue = this.GetComponentInParent<ICombat>().BaseAttack();
+        int baseValue = attacker.BaseAttack();
 
-        List<IWeapon> weapons = new List<IWeapon>(attacker.GetComponentsInParent<IWeapon>());
+        List<WeaponSlot> weaponSlots = new List<WeaponSlot>(attacker.GetComponentsInParent<WeaponSlot>());
 
-        int valueBonuses = weapons.Select(weapon => weapon.AttackBonus()).Sum();
+        int valueBonuses = weaponSlots.Select(slot => {
+            MyWeapon weapon = slot.GetWeapon();
+            if (weapon != null)
+            {
+                return weapon.AttackBonus();
+            }
+            return 0;
+        }).Sum();
 
-        value += baseValue + valueBonuses;
+        value += baseValue + valueBonuses + dice.Roll();
 
         return value;
     }
@@ -34,20 +67,27 @@ public class CombatController : MonoBehaviour
     private int CalculateDefenseValue(Combat target)
     {
         int value = 0;
-        int baseValue = this.GetComponentInParent<ICombat>().BaseAttack();
+        int baseValue = target.BaseDefense();
 
-        List<IWeapon> weapons = new List<IWeapon>(target.GetComponentsInParent<IWeapon>());
+        List<WeaponSlot> weaponSlots = new List<WeaponSlot>(target.GetComponentsInParent<WeaponSlot>());
 
-        int valueBonuses = weapons.Select(weapon => weapon.DefenseBonus()).Sum();
+        int valueBonuses = weaponSlots.Select(slot => {
+            MyWeapon weapon = slot.GetWeapon();
+            if (weapon != null)
+            {
+                return weapon.DefenseBonus();
+            }
+            return 0;
+        }).Sum();
 
-        value += baseValue + valueBonuses;
+        value += baseValue + valueBonuses + dice.Roll();
 
         return value;
     }
 
     private int CalculateDamage(int attackValue, int defenseValue)
     {
-        float rawDamage = (attackValue + defenseValue) / 2;
+        float rawDamage = (attackValue - defenseValue) / 2;
         return Convert.ToInt32(Math.Floor(rawDamage));
     }
 

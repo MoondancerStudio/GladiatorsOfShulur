@@ -20,18 +20,21 @@ public class Health : MonoBehaviour, IHealth
 
     public void SufferDamage(int damage)
     {
-        actualHitPoints -= damage;
-        Debug.Log("Auch! That's hurt.");
-
-        if (actualHitPoints <= 0)
+        if (damage > 0)
         {
-            Die();
+            actualHitPoints -= damage;
+            Debug.Log(this.name + ": Auch! That's hurt.");
+
+            if (actualHitPoints <= 0)
+            {
+                Die();
+            }
         }
     }
 
     public void Die()
     {
-        Debug.Log("I'm dead.");
+        Debug.Log(this.name + ": I'm dead.");
         Destroy(gameObject);
     }
 
