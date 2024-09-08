@@ -4,5 +4,17 @@ using UnityEngine;
 
 public class CharacterBasics : MonoBehaviour
 {
-    // Here comes all the generic stuff.
+    [SerializeField] private CharacterConfig config;
+
+    public void Awake()
+    {
+        if (config == null) { 
+            throw new System.ArgumentNullException("config");
+        }
+
+        this.name = config.characterName;
+
+        List<ConfigurableCharacterBehaviour> behaviours = new(this.GetComponentsInParent<ConfigurableCharacterBehaviour>());
+        behaviours.ForEach(behaviour => behaviour.SetConfig(config));
+    }
 }

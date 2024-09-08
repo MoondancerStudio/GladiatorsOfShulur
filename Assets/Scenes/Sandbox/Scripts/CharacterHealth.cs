@@ -5,11 +5,16 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public class CharacterHealth : MonoBehaviour
+public class CharacterHealth : ConfigurableCharacterBehaviour
 {
     [SerializeField] private int maxHealth;
     [SerializeField] private int actHealth;
 
+    public void Start()
+    {
+        maxHealth = config.maxHealth;
+        actHealth = maxHealth;
+    }
 
     public void ChangeHealth(int value)
     {
