@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -797189457713843440}
   - component: {fileID: -7397639471632354542}
   m_Layer: 0
-  m_Name: WeaponObject
+  m_Name: RoyalSaber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

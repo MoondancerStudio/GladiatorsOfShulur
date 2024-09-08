@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 818472a0c57759746a61a69e6071a7e8, type: 3}
-  m_Name: RoyalSaber
+  m_Script: {fileID: 11500000, guid: b4faee55ef9fe8d4786add24c49bcc51, type: 3}
+  m_Name: BahradaConfig
   m_EditorClassIdentifier: 
-  name: Royal Saber
-  description: 
-  artwork: {fileID: 21300000, guid: bd97f75eec64a71488c0f64779f67090, type: 3}
-  attackBonus: 7
-  defenseBonus: 6
+  name: Bahrada
+  maxHp: 4
+  attachBase: 32
+  defenseBase: 32
+  weapons:
+  - {fileID: -7397639471632354542, guid: 2a025ad9d3e75d846b331ff55b10dbed, type: 3}
