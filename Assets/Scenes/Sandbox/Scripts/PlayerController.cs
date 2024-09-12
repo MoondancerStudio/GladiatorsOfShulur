@@ -3,43 +3,60 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : ConfigurableCharacterBehaviour
 {
-    [SerializeField] Transform body;
-
     [SerializeField] float speed;
-    [SerializeField] InputAction playerControls;
+
+    private Transform body;
+    private PlayerInputActions playerControls;
+    [SerializeField] InputAction move;
 
     Vector2 moveDirection = Vector2.zero;
 
-    public new void Start()
+    private void Awake()
+    {
+        playerControls = new PlayerInputActions();
+    }
+
+    private new void Start()
     {
         base.Start();
 
         body = GetComponent<Transform>();
     }
+    
     override protected void ConfigureValues()
     {
         speed = config.speed;
     }
 
-    public void OnEnable()
+    private void OnEnable()
     {
-        playerControls.Enable();
+        move = playerControls.Player.Move;
+        move.Enable();
     }
 
-    public void OnDisable()
+    private void OnDisable()
     {
-        playerControls.Disable();
+        move.Disable();
     }
 
-    public void Update()
-    {      
-        moveDirection = playerControls.ReadValue<Vector2>().normalized;
-
-        Debug.Log($"Move: [{moveDirection.x}, {moveDirection.y}]");
+    private void Update()
+    {
+        Move(move);
     }
 
-    private void FixedUpdate()
+    /*
+     * For continous movint it is handled in Update method
+     * Event based trigger only supports OnPress and OnRelease events, Building the same requires much more code.
+     * For handling discrete steps the event based solution seems the better choice. move.performed += Move(InputAction
+     */
+    private void Move(InputAction action)
     {
-        body.Translate(new Vector3(moveDirection.x * speed, moveDirection.y * speed) * Time.deltaTime);
+        if (action.IsPressed())
+        {
+            moveDirection = action.ReadValue<Vector2>().normalized;
+            Debug.Log("Move!");
+            Debug.Log($"Move: [{moveDirection.x}, {moveDirection.y}]");
+            body.Translate(new Vector3(moveDirection.x * speed, moveDirection.y * speed) * Time.deltaTime);
+        }
     }
 }

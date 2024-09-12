@@ -175,54 +175,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 0}
-  body: {fileID: 0}
   speed: 0
-  playerControls:
-    m_Name: Player Controls
+  body: {fileID: 0}
+  move:
+    m_Name: Move
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 4463ca5d-64b3-42dc-bdde-131d8ee51ea7
+    m_Id: 95342aa7-450e-4774-9cba-270764447b38
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: WASD
-      m_Id: 99c2e93e-e349-4021-9d6b-efa0169a04b5
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 4
-    - m_Name: up
-      m_Id: c0d5554b-6180-4e2d-aea3-38bda7bb924c
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 9e1187e2-2c14-49a1-9e17-157fa208b444
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    - m_Name: left
-      m_Id: 7489792e-2c7f-482a-aa6c-1504be88d127
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 8e6437c3-ddfe-4560-b54a-27db91d66483
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 8
+    m_SingletonActionBindings: []
     m_Flags: 0
