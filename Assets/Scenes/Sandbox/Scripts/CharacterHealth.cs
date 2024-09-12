@@ -10,7 +10,7 @@ public class CharacterHealth : ConfigurableCharacterBehaviour
     [SerializeField] private int maxHealth;
     [SerializeField] private int actHealth;
 
-    public void Start()
+    override protected void ConfigureValues()
     {
         maxHealth = config.maxHealth;
         actHealth = maxHealth;

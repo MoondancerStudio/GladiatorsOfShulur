@@ -9,12 +9,10 @@ public class CharacterCombat : ConfigurableCharacterBehaviour
     [SerializeField] private int attackBase;
     [SerializeField] private int defenseBase;
 
-    public void Start()
+    override protected void ConfigureValues()
     {
         attackBase = config.attackBase;
         defenseBase = config.defenseBase;
-
-        Test();
     }
 
     private void Test()
@@ -30,7 +28,7 @@ public class CharacterCombat : ConfigurableCharacterBehaviour
         // Fire Game event (attacker, target, attackValue)
         // TODO: Create ecosystem
         Debug.Log($"{name} attacks with [{attackValue}]");
-        Defend(attackValue, this.gameObject); // FIXME: Remove this part. Only for initial debug purposes.
+        Defend(attackValue, target); // FIXME: Remove this part. Only for initial debug purposes.
     }
 
     public void Defend(int attackValue, GameObject attacker)

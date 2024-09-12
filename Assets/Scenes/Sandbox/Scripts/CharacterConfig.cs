@@ -9,4 +9,5 @@ public class CharacterConfig : ScriptableObject
     public int maxHealth;
     public int attackBase;
     public int defenseBase;
+    public float speed;
 }

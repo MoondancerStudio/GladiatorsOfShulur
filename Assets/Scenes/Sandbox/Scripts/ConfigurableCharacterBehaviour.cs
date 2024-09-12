@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ConfigurableCharacterBehaviour : MonoBehaviour
+public abstract class ConfigurableCharacterBehaviour : MonoBehaviour
 {
     [SerializeField] protected CharacterConfig config;
 
@@ -8,4 +8,11 @@ public class ConfigurableCharacterBehaviour : MonoBehaviour
     {
         this.config = config; 
     }
+
+    public void Start()
+    {
+        ConfigureValues();
+    }
+
+    abstract protected void ConfigureValues();
 }
