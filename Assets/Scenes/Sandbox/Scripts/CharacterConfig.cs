@@ -10,4 +10,7 @@ public class CharacterConfig : ScriptableObject
     public int attackBase;
     public int defenseBase;
     public float speed;
+
+    public Sprite icon;
+    public Sprite avatar;
 }

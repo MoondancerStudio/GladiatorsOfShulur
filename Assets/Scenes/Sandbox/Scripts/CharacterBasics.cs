@@ -2,19 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterBasics : MonoBehaviour
+public class CharacterBasics : ConfigurableCharacterBehaviour
 {
-    [SerializeField] private CharacterConfig config;
-
-    public void Awake()
+    protected override void ConfigureValues()
     {
-        if (config == null) { 
-            throw new System.ArgumentNullException("config");
-        }
-
         this.name = config.characterName;
-
-        List<ConfigurableCharacterBehaviour> behaviours = new(this.GetComponentsInParent<ConfigurableCharacterBehaviour>());
-        behaviours.ForEach(behaviour => behaviour.SetConfig(config));
+        GetComponent<SpriteRenderer>().sprite = config.icon;
     }
 }

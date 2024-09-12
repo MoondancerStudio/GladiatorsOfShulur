@@ -17,3 +17,5 @@ MonoBehaviour:
   attackBase: 37
   defenseBase: 37
   speed: 5
+  icon: {fileID: 21300000, guid: d19c7a94a00985b45a83a8bcfcbc4e34, type: 3}
+  avatar: {fileID: 21300000, guid: 087909cfcbf14a049826a80e4787b8d7, type: 3}

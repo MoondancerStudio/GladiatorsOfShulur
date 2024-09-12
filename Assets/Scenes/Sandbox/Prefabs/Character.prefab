@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2173039566197528122}
   - component: {fileID: 5903719206113783989}
   - component: {fileID: -2029386157450174781}
+  - component: {fileID: 4044296926882731480}
   - component: {fileID: -6089359030921409168}
   - component: {fileID: -7267685676633629678}
   - component: {fileID: 6772653435886032572}
@@ -119,6 +120,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &4044296926882731480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187847397744319981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c7bb7aaf2de1ad4791b9934b62833a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 5dc3c54113ceb00468f190fd2789c6f8, type: 2}
 --- !u!114 &-6089359030921409168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0520208190733284e9becb827d5ff76f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 5dc3c54113ceb00468f190fd2789c6f8, type: 2}
+  config: {fileID: 0}
 --- !u!114 &-7267685676633629678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +190,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 0}
   speed: 0
-  body: {fileID: 0}
   move:
     m_Name: Move
     m_Type: 0
