@@ -9,7 +9,7 @@ public abstract class ConfigurableCharacterBehaviour : MonoBehaviour
         this.config = config; 
     }
 
-    public void Start()
+    protected void Start()
     {
         ConfigureValues();
     }

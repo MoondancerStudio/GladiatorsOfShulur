@@ -6,6 +6,7 @@ TagManager:
   tags:
   - tile
   - obstacle
+  - target
   layers:
   - Default
   - TransparentFX

@@ -32,9 +32,9 @@ public class CharacterHealth : ConfigurableCharacterBehaviour
 
     private void Damage(int amount)
     {
-        Debug.Log($"{this.name}: Auch, that hurst! [-{amount} HP]");
+        Debug.Log($"{this.name}: Auch, that hurst! [{amount} HP]");
 
-        if (actHealth < 0)
+        if (actHealth <= 0)
         {
             Die();
         }
@@ -44,7 +44,7 @@ public class CharacterHealth : ConfigurableCharacterBehaviour
     {
         // Trigger Character Died event
         Debug.Log($"{this.name} died.");
-        GameObject.Destroy(this);
+        GameObject.Destroy(this.gameObject);
     }
 
     private void Heal(int amount)

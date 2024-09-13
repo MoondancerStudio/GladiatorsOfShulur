@@ -13,9 +13,12 @@ GameObject:
   - component: {fileID: -2029386157450174781}
   - component: {fileID: 4044296926882731480}
   - component: {fileID: -6089359030921409168}
+  - component: {fileID: -8775450345282526157}
   - component: {fileID: -7267685676633629678}
   - component: {fileID: 6772653435886032572}
   - component: {fileID: 3421196808470536197}
+  - component: {fileID: 8823574314314226514}
+  - component: {fileID: -5512734365794833948}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -146,6 +149,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 0}
+--- !u!114 &-8775450345282526157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187847397744319981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537e789f179a30a4d971c544d8943606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 0}
+  speed: 0
 --- !u!114 &-7267685676633629678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,8 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cab8fa66d6d92946bc9a1a7805c4f77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
-  speed: 0
   move:
     m_Name: Move
     m_Type: 0
@@ -199,3 +214,70 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  fire:
+    m_Name: Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 53512c52-3987-4eed-91a4-1bb225594cb0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  playerMoveEvent: {fileID: 11400000, guid: 292f58d1aaa322146b894ce845cca5f9, type: 2}
+  playerAttackEvent: {fileID: 11400000, guid: c54e2d9547dc58b4298d2fe1c48863e3, type: 2}
+--- !u!114 &8823574314314226514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187847397744319981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1787835cec450034196178273fa2fb25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 292f58d1aaa322146b894ce845cca5f9, type: 2}
+  onEventTriggered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8775450345282526157}
+        m_TargetAssemblyTypeName: CharacterMove, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-5512734365794833948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187847397744319981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1787835cec450034196178273fa2fb25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: c54e2d9547dc58b4298d2fe1c48863e3, type: 2}
+  onEventTriggered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6772653435886032572}
+        m_TargetAssemblyTypeName: CharacterCombat, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

@@ -22,13 +22,13 @@ public class CharacterCombat : ConfigurableCharacterBehaviour
 
     public void Attack(GameObject target)
     {
+        // TODO: finding target
         // Calculate Attack Value
         int attackValue = attackBase + UnityEngine.Random.Range(1, 10);
 
-        // Fire Game event (attacker, target, attackValue)
-        // TODO: Create ecosystem
         Debug.Log($"{name} attacks with [{attackValue}]");
-        Defend(attackValue, target); // FIXME: Remove this part. Only for initial debug purposes.
+
+        target.GetComponent<CharacterCombat>()?.Defend(attackValue, gameObject); // FIXME: Remove this part. Only for initial debug purposes.
     }
 
     public void Defend(int attackValue, GameObject attacker)
