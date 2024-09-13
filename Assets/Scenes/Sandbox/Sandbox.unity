@@ -128,6 +128,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5881949434963360350, guid: 5c9b66914fe8a1e4eb5497bf539ad3ac, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2173039566197528122, guid: 5c9b66914fe8a1e4eb5497bf539ad3ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -180,6 +184,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: target
       objectReference: {fileID: 0}
+    - target: {fileID: 6517650617719842261, guid: 5c9b66914fe8a1e4eb5497bf539ad3ac, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -2029386157450174781, guid: 5c9b66914fe8a1e4eb5497bf539ad3ac, type: 3}
     - {fileID: 3421196808470536197, guid: 5c9b66914fe8a1e4eb5497bf539ad3ac, type: 3}
@@ -195,7 +203,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -5512734365794833948, guid: 5c9b66914fe8a1e4eb5497bf539ad3ac, type: 3}
+    - target: {fileID: 0}
       propertyPath: onEventTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1789846686}
@@ -239,6 +247,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3421196808470536197, guid: 5c9b66914fe8a1e4eb5497bf539ad3ac, type: 3}
+      propertyPath: playerMoveEvent2
+      value: 
+      objectReference: {fileID: 11400000, guid: f214f51b5bc80c5429c64ccb583b561d, type: 2}
     - target: {fileID: 5187847397744319981, guid: 5c9b66914fe8a1e4eb5497bf539ad3ac, type: 3}
       propertyPath: m_Name
       value: Player

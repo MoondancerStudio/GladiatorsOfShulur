@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputAction move;
     [SerializeField] private InputAction fire;
 
-    public GameEvent2 playerMoveEvent2;
-    public GameEvent playerAttackEvent;
+    public GameEvent2 playerMoveEvent;
+    public GameEvent2 playerAttackEvent;
 
     private Vector2 moveDirection = Vector2.zero;
 
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
             EventParameter eventParameter = ScriptableObject.CreateInstance<EventParameter>();
             eventParameter.Add("move", moveDirection);
 
-            playerMoveEvent2.TriggerEvent(eventParameter);
+            playerMoveEvent.TriggerEvent(eventParameter);
         }
     }
 
@@ -68,13 +68,9 @@ public class PlayerController : MonoBehaviour
         var mousePosition = Mouse.current.position;
         var attackVector = camera.ScreenToWorldPoint(new Vector3(mousePosition.x.value, mousePosition.y.value));
 
-        // TODO: Refactor this in a way where the actual move is the responsibility of the CharacterCombat component.
-        // find target by raycasting
-        var targetName = "John Doe";
-        //playerAttackEvent.TriggerEvent(target);
-        playerAttackEvent.TriggerEvent();
-        Debug.Log($"{name}: Attack {targetName}! [{attackVector.x}, {attackVector.y}]");
+        EventParameter eventParameter = ScriptableObject.CreateInstance<EventParameter>();
+        eventParameter.Add("attackVector", attackVector);
 
-
+        playerAttackEvent.TriggerEvent(eventParameter);
     }
 }
