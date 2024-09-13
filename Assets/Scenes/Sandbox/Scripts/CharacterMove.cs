@@ -26,5 +26,11 @@ public class CharacterMove : ConfigurableCharacterBehaviour
         body.Translate(new Vector3(moveDirection.x * speed, moveDirection.y * speed) * Time.deltaTime);
     }
 
-    public void DoSomething() { }
+    public void OnMoveControl(EventParameter parameter) 
+    {
+        if (parameter != null && parameter.Get("move") != null && parameter.Get("move") is Vector2 moveDirection)
+        {
+            Move(moveDirection);
+        }
+    }
 }

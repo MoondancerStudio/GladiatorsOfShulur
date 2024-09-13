@@ -17,8 +17,8 @@ GameObject:
   - component: {fileID: -7267685676633629678}
   - component: {fileID: 6772653435886032572}
   - component: {fileID: 3421196808470536197}
-  - component: {fileID: 8823574314314226514}
   - component: {fileID: -5512734365794833948}
+  - component: {fileID: -5881949434963360350}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -224,35 +224,8 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   playerMoveEvent: {fileID: 11400000, guid: 292f58d1aaa322146b894ce845cca5f9, type: 2}
+  playerMoveEvent2: {fileID: 11400000, guid: f214f51b5bc80c5429c64ccb583b561d, type: 2}
   playerAttackEvent: {fileID: 11400000, guid: c54e2d9547dc58b4298d2fe1c48863e3, type: 2}
---- !u!114 &8823574314314226514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5187847397744319981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1787835cec450034196178273fa2fb25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 292f58d1aaa322146b894ce845cca5f9, type: 2}
-  onEventTriggered:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -8775450345282526157}
-        m_TargetAssemblyTypeName: CharacterMove, Assembly-CSharp
-        m_MethodName: Move
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &-5512734365794833948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +249,34 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-5881949434963360350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187847397744319981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158dec3da84d5224b8ce4331d028df6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: f214f51b5bc80c5429c64ccb583b561d, type: 2}
+  onEventTriggered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8775450345282526157}
+        m_TargetAssemblyTypeName: CharacterMove, Assembly-CSharp
+        m_MethodName: OnMoveControl
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

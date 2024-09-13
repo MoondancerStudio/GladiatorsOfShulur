@@ -5,13 +5,12 @@ public class PlayerController : MonoBehaviour
 {
     private float speed;
 
-    //private Transform body;
     private PlayerInputActions playerControls;
-    private Camera camera;
+    private new Camera camera;
     [SerializeField] private InputAction move;
     [SerializeField] private InputAction fire;
 
-    public GameEvent playerMoveEvent;
+    public GameEvent2 playerMoveEvent2;
     public GameEvent playerAttackEvent;
 
     private Vector2 moveDirection = Vector2.zero;
@@ -24,7 +23,6 @@ public class PlayerController : MonoBehaviour
 
     public void Start()
     {
-        //body = GetComponent<Transform>();
         if (GetComponent<CharacterMove>() != null)
         {
             speed = GetComponent<CharacterMove>().GetSpeed();
@@ -52,21 +50,16 @@ public class PlayerController : MonoBehaviour
         Move(move);
     }
 
-    /*
-     * For continous movint it is handled in Update method
-     * Event based trigger only supports OnPress and OnRelease events, Building the same requires much more code.
-     * For handling discrete steps the event based solution seems the better choice. move.performed += Move(InputAction
-     */
     private void Move(InputAction action)
     {
         if (action.IsPressed())
         {
             moveDirection = action.ReadValue<Vector2>().normalized;
-            // TODO: Refactor this in a way where the actual move is the responsibility of the CharacterMove component.
-            playerMoveEvent.TriggerEvent();
-            //playerMoveEvent.TriggerEvent(moveDirection);
-            Debug.Log($"{name}: Should have moved! [{moveDirection.x}, {moveDirection.y}]");
-            //body.Translate(new Vector3(moveDirection.x * speed, moveDirection.y * speed) * Time.deltaTime);
+
+            EventParameter eventParameter = ScriptableObject.CreateInstance<EventParameter>();
+            eventParameter.Add("move", moveDirection);
+
+            playerMoveEvent2.TriggerEvent(eventParameter);
         }
     }
 
