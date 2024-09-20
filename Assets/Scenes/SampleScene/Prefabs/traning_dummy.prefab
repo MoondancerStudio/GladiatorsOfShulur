@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8904904142563271180}
   - component: {fileID: 2984654393267061558}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 7984772886572818607}
   - component: {fileID: 8770044730097450920}
   m_Layer: 5
-  m_Name: Scrollbar
+  m_Name: life
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

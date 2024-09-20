@@ -1,10 +1,5 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +12,7 @@ enum UnitType
 
 public class Unit : MonoBehaviour
 {
-    float damage = 10.0f;
+    public float damage = 10.0f;
     //float luck = 50.0f;
     float moveSpeed = 5f;
 
@@ -28,7 +23,6 @@ public class Unit : MonoBehaviour
     public bool move;
 
     private bool outOfStamina;
-    private bool isPlayerTurn;
 
 
     public static Unit unitInstance { get; private set; }
@@ -42,6 +36,18 @@ public class Unit : MonoBehaviour
     [SerializeField]
     public GameObject _hover;
 
+    private Scrollbar _enemyHP;
+    private Scrollbar _playerStamina;
+
+    public Scrollbar PlayerStamina { get; private set; }
+
+    void Start()
+    {
+        _enemyHP = GameObject.Find("enemy").transform.Find("UI/life").GetComponent<Scrollbar>();
+        _playerStamina = GameObject.Find("player").transform.Find("UI/stamina").GetComponent<Scrollbar>();
+        PlayerStamina = _playerStamina;
+    }
+
     public void init(bool team, Vector2 pos)
     {
         this.pos = pos;
@@ -49,9 +55,7 @@ public class Unit : MonoBehaviour
         this.possibleMoves = new List<Vector2>();
         this.move = false;
         outOfStamina = false;
-        isPlayerTurn = true;
         fillPossibleMoves();
-        
     }
 
     public void Unit_playerMoveEvent(object sender, Tile.OnPlayerMoveChangedArgs e)
@@ -70,7 +74,7 @@ public class Unit : MonoBehaviour
     }
 
     public void updateMove()
-    {
+    { 
         possibleMoves.ForEach(possibleMove =>
         {
             Vector3 newPos = new Vector2(possibleMove.x + transform.position.x, possibleMove.y + transform.position.y);
@@ -92,22 +96,24 @@ public class Unit : MonoBehaviour
         if(unit != null)
         {
             unit.hp -= damage;
-            GameObject.Find("enemy").transform.Find("Canvas (1)").transform.Find("Scrollbar").GetComponent<Scrollbar>().size -= unit.damage * 0.01f;
-            GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size -= unit.damage * 0.05f;
+            //    GameObject.Find("enemy").GetComponent<Animator>().SetBool("enemy_hurt", true);
+            GameObject.Find("enemy").GetComponent<Animator>().SetTrigger("hurt");
+           _enemyHP.size -= unit.damage * 0.01f;
+           _playerStamina.size -= unit.damage * 0.05f;
 
-            ColorBlock defaultColorBlock = GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors;
+            ColorBlock defaultColorBlock = _playerStamina.colors;
             defaultColorBlock.colorMultiplier += 0.3f * damage;
-            GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock;
+            _playerStamina.colors = defaultColorBlock;
 
-            if (GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size < 0.1)
+            if (_playerStamina.size < 0.1)
             {
                // defaultColorBlock.normalColor = new Color(255,0,0);
-               // GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock;
+               // _playerStamina.colors = defaultColorBlock;
                 outOfStamina = true;
-                GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size += Time.deltaTime * 0.3f;
-                defaultColorBlock = GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors;
+                _playerStamina.size += Time.deltaTime * 0.3f;
+                defaultColorBlock = _playerStamina.colors;
                 defaultColorBlock.colorMultiplier = 0;
-                GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock ;
+                _playerStamina.colors = defaultColorBlock ;
             }
 
             if (unit.hp <= 0)
@@ -142,7 +148,7 @@ public class Unit : MonoBehaviour
             if (player != null && player.moves.Contains(transform.position) && !GameObject.Find("player").GetComponent<Unit>().outOfStamina)
             {
                 GameObject.Find("player").GetComponent<Unit>().Doattack(this);
-                GetComponent<ParticleSystem>().enableEmission = true;
+             //   GetComponent<ParticleSystem>().enableEmission = true;
 
                 Tile t = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(player.transform.position);
 
@@ -170,10 +176,9 @@ public class Unit : MonoBehaviour
 
         if (outOfStamina)
         {
-            GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size += Time.deltaTime * 0.3f;
-            ColorBlock defaultColorBlock = GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors;
-          //  Debug.Log(Time.time);
-           // Debug.Log((int)Time.time);
+            _playerStamina.size += Time.deltaTime * 0.3f;
+            ColorBlock defaultColorBlock = _playerStamina.colors;
+
             if (defaultColorBlock.colorMultiplier == 0 && (int)Time.time % 2 == 0)
             {
                 defaultColorBlock.colorMultiplier = 1.01f;
@@ -182,18 +187,19 @@ public class Unit : MonoBehaviour
             if (defaultColorBlock.colorMultiplier > 1)
             {
                 defaultColorBlock.colorMultiplier -= 0.01f;
-                GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock;
+                _playerStamina.colors = defaultColorBlock;
             }
         }
 
-        if (GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().size == 1f && outOfStamina)
+        if (_playerStamina.size == 1f && outOfStamina)
         {
-          //  ColorBlock defaultColorBlock = GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors;
+          //  ColorBlock defaultColorBlock = _playerStamina.colors;
            // defaultColorBlock.normalColor = new Color(209, 111, 11);
-          //  GameObject.Find("player").transform.Find("Canvas").transform.Find("Scrollbar").GetComponent<Scrollbar>().colors = defaultColorBlock;
+          //  _playerStamina.colors = defaultColorBlock;
             outOfStamina = false;    
         }
 
+        /*
         GameObject enemy = GameObject.Find("enemy");
         if (enemy != null && enemy!.GetComponent<ParticleSystem>().isEmitting)
         {
@@ -202,6 +208,7 @@ public class Unit : MonoBehaviour
                 enemy.GetComponent<ParticleSystem>().enableEmission = false;
             }
         }   
+        */
 
         if (move)
         {
@@ -223,7 +230,7 @@ public class Unit : MonoBehaviour
                 transform.position = new Vector3((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y), -0.1f);
                 move = false;
                 moves.Clear();
-                fillPossibleMoves();
+                //fillPossibleMoves();
             }
         }
     }
