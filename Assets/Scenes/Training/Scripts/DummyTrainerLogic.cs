@@ -62,7 +62,7 @@ public class DummyTrainerLogic : MonoBehaviour
             ToggleTask.transform.Find("Task").GetComponent<TextMeshProUGUI>().text = $"Okozz {hitCount} sebzést a bábun!";
         }
         
-        if(currentCount == 8)
+        if(currentCount == 0)
         {
             currentCount = -2;
             ToggleTask.isOn = true;
