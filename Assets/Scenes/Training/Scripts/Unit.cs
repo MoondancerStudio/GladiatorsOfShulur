@@ -95,10 +95,19 @@ public class Unit : MonoBehaviour
     {
         if(unit != null)
         {
-            unit.hp -= damage;
+            unit.hp -= damage * 0.1f;
             //    GameObject.Find("enemy").GetComponent<Animator>().SetBool("enemy_hurt", true);
-            GameObject.Find("enemy").GetComponent<Animator>().SetTrigger("hurt");
-           _enemyHP.size -= unit.damage * 0.01f;
+            if (GameObject.Find("enemy").GetComponent<Animator>() != null)
+                  GameObject.Find("enemy").GetComponent<Animator>().SetTrigger("hurt");
+
+            if (GameObject.Find("enemy").GetComponent<DummyTrainerLogic>() != null)
+                GameObject.Find("enemy").GetComponent<DummyTrainerLogic>().hitCount -= 1;
+
+            if (GameObject.Find("Asd") != null)
+                _enemyHP = GameObject.Find("enemy").transform.Find("UI/life").GetComponent<Scrollbar>();
+
+
+            _enemyHP.size -= unit.damage * 0.01f;
            _playerStamina.size -= unit.damage * 0.05f;
 
             ColorBlock defaultColorBlock = _playerStamina.colors;

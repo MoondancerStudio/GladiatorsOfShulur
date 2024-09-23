@@ -54,6 +54,7 @@ public class GameHander : MonoBehaviour
                   //  GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = false;
                 }
 
+                /*
                 if(UnityEngine.Random.Range(0,4) == 1 && 
                     GameObject.Find("player").gameObject.transform.position.x != x && 
                     GameObject.Find("player").gameObject.transform.position.y != y &&
@@ -65,7 +66,7 @@ public class GameHander : MonoBehaviour
                     spawned.tag = "obstacle";
                     obstacle.tag = "obstacle";
                 }
-
+                */
                 tiles.TryAdd(new Vector2(x, y), spawned);
             }
         }
