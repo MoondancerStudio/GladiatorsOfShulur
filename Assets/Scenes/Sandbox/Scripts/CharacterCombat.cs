@@ -9,6 +9,16 @@ public class CharacterCombat : ConfigurableCharacterBehaviour
     [SerializeField] private int attackBase;
     [SerializeField] private int defenseBase;
 
+    public void AlterAttack(int value)
+    {
+        attackBase += value;
+    }
+
+    public void AlterDefense(int value)
+    {
+        defenseBase += value;
+    }
+
     override protected void ConfigureValues()
     {
         attackBase = config.attackBase;
