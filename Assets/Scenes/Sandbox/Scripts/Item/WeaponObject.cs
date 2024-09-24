@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item / Weapon")]
-public class WeaponObject : ScriptableObject, ITem
+public class WeaponObject : ScriptableObject, Item
 {
     public new string name;
     public int attack;
