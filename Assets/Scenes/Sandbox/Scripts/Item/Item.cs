@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Item
+public abstract class Item : ScriptableObject
 {
-    void OnEquip(GameObject character);
-    void OnRemove(GameObject character);
+    public abstract void OnEquip(GameObject character);
+    public abstract void OnRemove(GameObject character);
 }

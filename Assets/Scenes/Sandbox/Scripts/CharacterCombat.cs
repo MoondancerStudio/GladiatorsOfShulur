@@ -11,6 +11,7 @@ public class CharacterCombat : ConfigurableCharacterBehaviour
 
     public void AlterAttack(int value)
     {
+        Debug.Log($"Alter attack by {value}");
         attackBase += value;
     }
 
