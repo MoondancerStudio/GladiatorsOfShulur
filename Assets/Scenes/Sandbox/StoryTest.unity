@@ -1532,6 +1532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 11400000, guid: e11d8e8db5cae0b4bb4da213753ee841, type: 2}
+  - {fileID: 11400000, guid: 52253f87ab3159e4c873053b30b4f475, type: 2}
 --- !u!50 &1854551312
 Rigidbody2D:
   serializedVersion: 4

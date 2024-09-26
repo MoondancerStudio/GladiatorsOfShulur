@@ -5,10 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item / Weapon")]
 public class WeaponObject : Item
 {
-    public new string name;
     public int attack;
     public int defense;
-    public Sprite icon;
 
     public override void OnEquip(GameObject character)
     {

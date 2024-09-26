@@ -6,15 +6,8 @@ public class ItemContainer : MonoBehaviour
 {
     [SerializeField] private List<Item> items;
 
-    private void Start()
+    void OnCollisionEnter2D(Collision2D col)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        EquipFirst(player);
-    }
-
-    void OnColllisionEnter2D(Collision2D col)
-    {
-        Debug.Log("OnCollision");
         // Get the GameObject that collided
         // If it has CharacterItemSlot Equip top item
         // If CharacterItemSlot has item, put it into items.
