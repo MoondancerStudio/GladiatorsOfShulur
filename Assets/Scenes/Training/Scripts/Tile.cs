@@ -9,10 +9,11 @@ public class Tile : MonoBehaviour
     private SpriteRenderer _renderer;
 
     [SerializeField]
-    public GameObject _highlight;
+    private GameObject _hover;
 
     [SerializeField]
-    public GameObject _hover;
+    public GameObject _highlight;
+
 
     public class OnPlayerMoveChangedArgs : EventArgs
     {
@@ -42,14 +43,12 @@ public class Tile : MonoBehaviour
     {
         if (_highlight.activeSelf)
         {
-            GameObject player = GameObject.Find("player");
-            if (player != null)
+            if (Unit.unitInstance != null)
             {
                 OnPlayerMoveChanged?.Invoke(this, new OnPlayerMoveChangedArgs
                 {
                     position = new Vector2(transform.position.x, transform.position.y)
                 });
-
                 tilePossibleMovesDeactivate();
             }
         }
@@ -64,8 +63,5 @@ public class Tile : MonoBehaviour
             if (tile._highlight.activeSelf)
                 tile._highlight.SetActive(false);
         }
-    }
-    void Update()
-    {
     }
 }

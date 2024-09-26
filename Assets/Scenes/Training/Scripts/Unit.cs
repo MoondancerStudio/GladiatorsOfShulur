@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,7 @@ public class Unit : MonoBehaviour
 
     private float moveSpeed = 5f;
     private bool outOfStamina;
+    private bool ishit;
 
 
     public static Unit unitInstance { get; private set; }
@@ -45,6 +47,7 @@ public class Unit : MonoBehaviour
         _enemyHP = GameObject.Find("enemy").transform.Find("UI/life").GetComponent<Scrollbar>();
         _playerStamina = GameObject.Find("player").transform.Find("UI/stamina").GetComponent<Scrollbar>();
         PlayerStamina = _playerStamina;
+        this.ishit = false;
     }
 
     public void init(bool team, Vector2 pos)
@@ -142,7 +145,8 @@ public class Unit : MonoBehaviour
 
         if (moves.Count == 0 && !move && transform.name.Equals("player"))
         {
-           updateMove();
+            transform.Find("active").gameObject.SetActive(true);
+            updateMove();
         } 
         else
         {
@@ -151,6 +155,7 @@ public class Unit : MonoBehaviour
             if (player != null && player.moves.Contains(transform.position) && !player.outOfStamina)
             {
                 GameObject.Find("player").GetComponent<Unit>().Doattack(this);
+                player.transform.Find("active").GetComponent<SpriteRenderer>().color = new Color32(255, 0, 0, 255);
              //   GetComponent<ParticleSystem>().enableEmission = true;
 
                 Tile t = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(player.transform.position);
@@ -159,8 +164,9 @@ public class Unit : MonoBehaviour
                 {
                     t.tilePossibleMovesDeactivate();
                 }
+             player.move = true;
+             player.ishit = true;
             }
-            player.move = true;
         }
     }
 
@@ -209,10 +215,17 @@ public class Unit : MonoBehaviour
         {
             if ((int)Time.time % 3 == 0)
             {
-                enemy.GetComponent<ParticleSystem>().enableEmission = false;
+                enemy.GetComgoiponent<ParticleSystem>().enableEmission = false;
             }
         }   
         */
+
+        if (ishit && (int)Time.time % 4 == 0)
+        {
+            ishit = !ishit;
+            transform.Find("active").gameObject.SetActive(false);
+            transform.Find("active").GetComponent<SpriteRenderer>().color = new Color32(42, 255, 0, 255);
+        }
 
         if (move)
         {
@@ -226,7 +239,14 @@ public class Unit : MonoBehaviour
                 transform.position = new Vector3((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y), -0.1f);
                 move = false;
                 moves.Clear();
+                if (transform.Find("active") != null && !ishit)
+                    transform.Find("active").gameObject.SetActive(false);
             }
+        }
+
+        if (moves.Count > 0 || ishit)
+        {
+            transform.Find("active").Rotate(new Vector3((float)Math.Sin(0.5) * Time.timeScale, (float)Math.Cos(0.5) * Time.timeScale, 0));
         }
     }
 }

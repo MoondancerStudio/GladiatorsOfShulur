@@ -182,11 +182,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09f13a539b088ea46929f72021b2a4d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
   hp: 100
+  move: 0
   moves: []
   pos: {x: 4, y: 9}
   possibleMoves: []
-  move: 0
   _hover: {fileID: 4544702104958955224}
 --- !u!61 &5217203585924341656
 BoxCollider2D:
