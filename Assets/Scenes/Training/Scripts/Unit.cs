@@ -13,15 +13,14 @@ enum UnitType
 public class Unit : MonoBehaviour
 {
     public float damage = 10.0f;
-    //float luck = 50.0f;
-    float moveSpeed = 5f;
-
     public float hp = 100.0f;
+    public bool move;
+
     public List<Vector2> moves;
     public Vector2 pos;
     public List<Vector2> possibleMoves;
-    public bool move;
 
+    private float moveSpeed = 5f;
     private bool outOfStamina;
 
 
@@ -77,7 +76,7 @@ public class Unit : MonoBehaviour
     { 
         possibleMoves.ForEach(possibleMove =>
         {
-            Vector3 newPos = new Vector2(possibleMove.x + transform.position.x, possibleMove.y + transform.position.y);
+            Vector2 newPos = new Vector2(possibleMove.x + transform.position.x, possibleMove.y + transform.position.y);
             Tile tile = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(newPos);
 
             if (tile != null)
@@ -148,13 +147,8 @@ public class Unit : MonoBehaviour
         else
         {
             Unit player = GameObject.Find("player").GetComponent<Unit>();
-
-            if (GameObject.Find("enemy") != null && moves.Contains(GameObject.Find("enemy").transform.position))
-            {
-                player.move = true;
-            }
-
-            if (player != null && player.moves.Contains(transform.position) && !GameObject.Find("player").GetComponent<Unit>().outOfStamina)
+            
+            if (player != null && player.moves.Contains(transform.position) && !player.outOfStamina)
             {
                 GameObject.Find("player").GetComponent<Unit>().Doattack(this);
              //   GetComponent<ParticleSystem>().enableEmission = true;
@@ -166,6 +160,7 @@ public class Unit : MonoBehaviour
                     t.tilePossibleMovesDeactivate();
                 }
             }
+            player.move = true;
         }
     }
 
@@ -221,17 +216,9 @@ public class Unit : MonoBehaviour
 
         if (move)
         {
-            if (pos.x > transform.position.x)
-                transform.position += new Vector3(moveSpeed, 0, -0.5f) * Time.deltaTime;
-
-            if (pos.x < transform.position.x)
-                transform.position += new Vector3(-moveSpeed, 0, -0.5f) * Time.deltaTime;
-
-            if (pos.y > transform.position.y)
-                transform.position += new Vector3(0, moveSpeed, -0.5f) * Time.deltaTime;
-
-            if (pos.y < transform.position.y)
-                transform.position += new Vector3(0, -moveSpeed, -0.5f) * Time.deltaTime;
+            Vector3 direction = new Vector3(Mathf.Sign(pos.x - transform.position.x), Mathf.Sign(pos.y - transform.position.y), -0.5f).normalized;
+         
+            transform.Translate(new Vector3(direction.x * moveSpeed, direction.y * moveSpeed, direction.z) * Time.deltaTime);
 
             // Have to check the two vectors distance, because of unpunctual value
             if (Vector2.Distance(transform.position, pos) < 0.1f)
@@ -239,7 +226,6 @@ public class Unit : MonoBehaviour
                 transform.position = new Vector3((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y), -0.1f);
                 move = false;
                 moves.Clear();
-                //fillPossibleMoves();
             }
         }
     }
