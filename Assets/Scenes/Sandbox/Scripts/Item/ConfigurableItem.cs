@@ -15,12 +15,12 @@ public class ConfigurableItem: MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = item.icon;
     }
 
-    internal void Equip(GameObject character)
+    public void Equip(GameObject character)
     {
         this.item?.OnEquip(character);
     }
 
-    internal void Remove(GameObject character)
+    public void Remove(GameObject character)
     {
         this.item?.OnRemove(character);
     }
