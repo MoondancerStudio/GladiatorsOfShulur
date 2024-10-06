@@ -176,7 +176,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 148465373802235073, guid: 7bd4969c6cabdbb459c65433ad553485, type: 3}
       propertyPath: m_Size.x
-      value: 0.4926746
+      value: 0.8411937
       objectReference: {fileID: 0}
     - target: {fileID: 148465373802235073, guid: 7bd4969c6cabdbb459c65433ad553485, type: 3}
       propertyPath: m_Size.y
@@ -184,7 +184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 148465373802235073, guid: 7bd4969c6cabdbb459c65433ad553485, type: 3}
       propertyPath: m_Offset.x
-      value: 0.00000011920929
+      value: 0.024035692
       objectReference: {fileID: 0}
     - target: {fileID: 148465373802235073, guid: 7bd4969c6cabdbb459c65433ad553485, type: 3}
       propertyPath: m_Offset.y
@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 897f0d799cc35704faa82be2a6013d0a, type: 3}
+    - target: {fileID: 4231563232959796378, guid: 7bd4969c6cabdbb459c65433ad553485, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4266463628342748042, guid: 7bd4969c6cabdbb459c65433ad553485, type: 3}
       propertyPath: config
       value: 
@@ -2102,7 +2106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6793197681946176550, guid: c202f5f2a094e304ba08bb80adf5ee15, type: 3}
       propertyPath: m_Size.x
-      value: 0.5967005
+      value: 1.0790958
       objectReference: {fileID: 0}
     - target: {fileID: 6793197681946176550, guid: c202f5f2a094e304ba08bb80adf5ee15, type: 3}
       propertyPath: m_Size.y
@@ -2110,11 +2114,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6793197681946176550, guid: c202f5f2a094e304ba08bb80adf5ee15, type: 3}
       propertyPath: m_Offset.x
-      value: -0.0003296435
+      value: 0.059969813
       objectReference: {fileID: 0}
     - target: {fileID: 6793197681946176550, guid: c202f5f2a094e304ba08bb80adf5ee15, type: 3}
       propertyPath: m_Offset.y
-      value: 0.000012844801
+      value: 0.000012874603
       objectReference: {fileID: 0}
     - target: {fileID: 6793197681946176550, guid: c202f5f2a094e304ba08bb80adf5ee15, type: 3}
       propertyPath: m_IsTrigger
