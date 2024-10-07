@@ -48,14 +48,6 @@ public class DummyTrainerLogic : MonoBehaviour
 
     void Update()
     {
-        if (currentCount == -2 && GameObject.Find("enemy") == null) {
-            ToggleTask.isOn = true;
-            ToggleTask.transform.Find("Task").GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
-            GameObject.Find("Canvas").transform.Find("Panel_next").gameObject.SetActive(true);
-            GameObject.Find("Canvas").transform.Find("Panel_next/msg").GetComponent<TextMeshProUGUI>().text = "Gratula, trainingnek vége!";
-            currentCount = -3;
-        }
-
         if (currentCount > hitCount && currentCount > 0)
         {
             currentCount = hitCount;
@@ -70,29 +62,46 @@ public class DummyTrainerLogic : MonoBehaviour
             GameObject.Find("Canvas").transform.Find("Panel_next").gameObject.SetActive(true);
         }
 
-        if (Random.Range(-15, 15) % 3 == 0 && isPlayerAround() && (int)Time.time % 5 == 0)
-        {
-            if (GameObject.Find("player").GetComponent<Unit>().hp > 0)
-            {
-                float getBarValue = unitComponent.damage * 0.01f;
-                GameObject.Find("player").GetComponent<Unit>().hp -= getBarValue;
-                getBarValue /= 100;
-                GameObject.Find("player").transform.Find("UI/life").GetComponent<Scrollbar>().size -= getBarValue;
-                if (GameObject.Find("enemy").GetComponent<Animator>() != null)
-                    transform.GetComponent<Animator>().SetTrigger("attack");
-            }
+        if (currentCount == -2 && GameObject.Find("enemy") == null) {
+            ToggleTask.isOn = true;
+            ToggleTask.transform.Find("Task").GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
+            GameObject.Find("Canvas").transform.Find("Panel_next").gameObject.SetActive(true);
+            GameObject.Find("Canvas").transform.Find("Panel_next/msg").GetComponent<TextMeshProUGUI>().text = "Gratula, trainingnek vége!";
+            currentCount = -3;
         }
 
-        if (Random.Range(-15, 15) % 4 == 0 && (int)Time.time % 5 == 0)
+        if (!GameObject.Find("player").GetComponent<Unit>().isPlayerTurn)
         {
-            move();
+
+            if (Random.Range(-15, 15) % 3 == 0 && isPlayerAround() && (int)Time.time % 6 == 0)
+            {
+                if (GameObject.Find("player").GetComponent<Unit>().hp > 0)
+                {
+                    float getBarValue = unitComponent.damage * 0.8f;
+                    GameObject.Find("player").GetComponent<Unit>().hp -= getBarValue;
+                    getBarValue /= 100;
+                    GameObject.Find("player").transform.Find("UI/life").GetComponent<Scrollbar>().size -= getBarValue;
+                    if (GameObject.Find("enemy").GetComponent<Animator>() != null)
+                        transform.GetComponent<Animator>().SetTrigger("attack");
+                }
+                GameObject.Find("player").GetComponent<Unit>().isPlayerTurn = !GameObject.Find("player").GetComponent<Unit>().isPlayerTurn;
+                GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 255, 0, 255);
+                GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
+            }
+
+            if (Random.Range(-15, 15) % 4 == 0 && (int)Time.time % 5 == 0 && currentCount == -2)
+            {
+                move();
+                GameObject.Find("player").GetComponent<Unit>().isPlayerTurn = !GameObject.Find("player").GetComponent<Unit>().isPlayerTurn;
+                GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 255, 0, 255);
+                GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
+            }
         }
     }
 
     void move()
     {
-        if (Random.Range(0, 6) == 1 && (int)Time.time % 10 == 0)
-        {
+       
             int random_x = (int)(Random.Range(-5, 5));
             int random_y = (int)(Random.Range(-5, 5));
 
@@ -110,7 +119,7 @@ public class DummyTrainerLogic : MonoBehaviour
           
             if (unitComponent.pos.x > 0 || unitComponent.pos.y > 0)
               unitComponent.move = true;
-        } 
+       
     }
 
     bool isPlayerAround()

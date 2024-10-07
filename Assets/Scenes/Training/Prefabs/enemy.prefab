@@ -146,10 +146,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   hp: 10
+  move: 0
   moves: []
   pos: {x: 0, y: 0}
   possibleMoves: []
-  move: 0
   _hover: {fileID: 8257647753539152116}
 --- !u!61 &6456481097079321246
 BoxCollider2D:
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

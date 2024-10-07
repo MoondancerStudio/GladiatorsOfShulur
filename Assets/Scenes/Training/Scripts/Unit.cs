@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +18,7 @@ public class Unit : MonoBehaviour
     public float damage = 10.0f;
     public float hp = 100.0f;
     public bool move;
+    public bool isPlayerTurn;
 
     public List<Vector2> moves;
     public Vector2 pos;
@@ -24,7 +27,6 @@ public class Unit : MonoBehaviour
     private float moveSpeed = 5f;
     private bool outOfStamina;
     private bool ishit;
-
 
     public static Unit unitInstance { get; private set; }
 
@@ -47,7 +49,8 @@ public class Unit : MonoBehaviour
         _enemyHP = GameObject.Find("enemy").transform.Find("UI/life").GetComponent<Scrollbar>();
         _playerStamina = GameObject.Find("player").transform.Find("UI/stamina").GetComponent<Scrollbar>();
         PlayerStamina = _playerStamina;
-        this.ishit = false;
+        ishit = false;
+        isPlayerTurn = true;
     }
 
     public void init(bool team, Vector2 pos)
@@ -142,30 +145,38 @@ public class Unit : MonoBehaviour
     [Obsolete]
     void OnMouseDown()
     {
-
-        if (moves.Count == 0 && !move && transform.name.Equals("player"))
+        if (isPlayerTurn)
         {
-            transform.Find("active").gameObject.SetActive(true);
-            updateMove();
-        } 
-        else
-        {
-            Unit player = GameObject.Find("player").GetComponent<Unit>();
-            
-            if (player != null && player.moves.Contains(transform.position) && !player.outOfStamina)
+            if (moves.Count == 0 && !move && transform.name.Equals("player"))
             {
-                GameObject.Find("player").GetComponent<Unit>().Doattack(this);
-                player.transform.Find("active").GetComponent<SpriteRenderer>().color = new Color32(255, 0, 0, 255);
-             //   GetComponent<ParticleSystem>().enableEmission = true;
+                transform.Find("active").gameObject.SetActive(true);
+                updateMove();
+                GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
+                GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 255, 0, 255);
+                isPlayerTurn = false;
+            }
+            else
+            {
+                Unit player = GameObject.Find("player").GetComponent<Unit>();
 
-                Tile t = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(player.transform.position);
-
-                if (t != null)
+                if (player != null && player.moves.Contains(transform.position) && !player.outOfStamina)
                 {
-                    t.tilePossibleMovesDeactivate();
+                    GameObject.Find("player").GetComponent<Unit>().Doattack(this);
+                    player.transform.Find("active").GetComponent<SpriteRenderer>().color = new Color32(255, 0, 0, 255);
+                    //   GetComponent<ParticleSystem>().enableEmission = true;
+
+                    Tile t = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(player.transform.position);
+
+                    if (t != null)
+                    {
+                        t.tilePossibleMovesDeactivate();
+                    }
+                    player.move = true;
+                    player.ishit = true;
+                    GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
+                    GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0,255,0,255);
+                    player.isPlayerTurn = !player.isPlayerTurn;
                 }
-             player.move = true;
-             player.ishit = true;
             }
         }
     }
