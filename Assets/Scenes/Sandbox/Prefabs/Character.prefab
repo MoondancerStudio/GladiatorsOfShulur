@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3421196808470536197}
   - component: {fileID: -5881949434963360350}
   - component: {fileID: 6517650617719842261}
+  - component: {fileID: -7870071164686571496}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -241,8 +242,8 @@ MonoBehaviour:
   onEventTriggered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -8775450345282526157}
-        m_TargetAssemblyTypeName: CharacterMove, Assembly-CSharp
+      - m_Target: {fileID: -7870071164686571496}
+        m_TargetAssemblyTypeName: CharacterController, Assembly-CSharp
         m_MethodName: OnMoveControl
         m_Mode: 0
         m_Arguments:
@@ -281,3 +282,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-7870071164686571496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187847397744319981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6311623a5949e64ba8dd5b9271500d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
