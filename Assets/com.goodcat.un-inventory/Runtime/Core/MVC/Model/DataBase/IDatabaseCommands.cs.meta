@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d7f1c7e5d7391a449a2662b3123ab3ad
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/MVC/Model/DataBase/IDatabaseCommands.cs
+  uploadId: 375699

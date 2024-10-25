@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5180382f4d1612443a9108990fa4f76a
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Hero/README.md
+  uploadId: 375699

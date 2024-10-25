@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: dd519a0b1d80d3f4f89beedb1300b0c7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Standard/MVC/Model/Commands/Primary/Move/MoveCommand.cs
+  uploadId: 375699

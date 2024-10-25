@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 5c5f5b524a5a8b74197a51d85ad1e681
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Plugins/Standard/Listeners/ChangeAmountEntityInInventoryListener.cs
+  uploadId: 375699

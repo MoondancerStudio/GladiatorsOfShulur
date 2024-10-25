@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 78abbaea0840be74e98fe7ba7714ef8b
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Editor/goodcat.un-inventory.editor.asmdef
+  uploadId: 375699

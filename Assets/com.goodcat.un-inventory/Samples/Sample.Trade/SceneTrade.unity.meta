@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8e444eff57f8e6a4a89c8555cd0a6958
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Trade/SceneTrade.unity
+  uploadId: 375699

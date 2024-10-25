@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5c586052dc9c9fe4882dfbd35502e971
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Trade/README.md
+  uploadId: 375699

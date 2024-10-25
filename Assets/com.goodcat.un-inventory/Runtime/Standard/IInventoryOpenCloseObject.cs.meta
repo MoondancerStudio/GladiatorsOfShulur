@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: a78314e4b87f21445817b57a85201e1d
+timeCreated: 1589499177
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Standard/IInventoryOpenCloseObject.cs
+  uploadId: 375699

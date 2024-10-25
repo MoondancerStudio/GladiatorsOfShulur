@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a0f8f60f1a5486141b422930b0757f27
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/MVC/Controller/BindComponentToData/IBindComponentToDataDBWrite.cs
+  uploadId: 375699

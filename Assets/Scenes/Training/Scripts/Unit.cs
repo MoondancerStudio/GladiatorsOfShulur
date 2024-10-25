@@ -153,7 +153,7 @@ public class Unit : MonoBehaviour
                 updateMove();
                 GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
                 GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 255, 0, 255);
-                isPlayerTurn = false;
+             //   isPlayerTurn = false;
             }
             else
             {
@@ -175,7 +175,7 @@ public class Unit : MonoBehaviour
                     player.ishit = true;
                     GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
                     GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0,255,0,255);
-                    player.isPlayerTurn = !player.isPlayerTurn;
+                //    player.isPlayerTurn = !player.isPlayerTurn;
                 }
             }
         }

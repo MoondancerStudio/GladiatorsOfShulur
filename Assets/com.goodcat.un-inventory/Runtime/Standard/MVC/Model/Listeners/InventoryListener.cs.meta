@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 32019814bab77db4e8e099e07c2ec8d7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Standard/MVC/Model/Listeners/InventoryListener.cs
+  uploadId: 375699

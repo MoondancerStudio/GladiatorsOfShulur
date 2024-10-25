@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 0ec3376fc01b5a34f97fa7b977ebf74a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/Configuration/IFactoryTypeToPrefab.cs
+  uploadId: 375699

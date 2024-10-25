@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 7e01d2b53a6180d48abf71f9acd0392c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/MVC/Model/Data/DataSlot.cs
+  uploadId: 375699

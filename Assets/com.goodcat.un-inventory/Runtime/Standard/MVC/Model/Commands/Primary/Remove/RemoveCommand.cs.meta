@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3128d07842f9cb94594f47d855cc5d11
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Standard/MVC/Model/Commands/Primary/Remove/RemoveCommand.cs
+  uploadId: 375699

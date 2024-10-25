@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 47886d81a86b93549ac654a8d52c3f50
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Hero/Filters/FilterDummyTwoHanded.cs
+  uploadId: 375699

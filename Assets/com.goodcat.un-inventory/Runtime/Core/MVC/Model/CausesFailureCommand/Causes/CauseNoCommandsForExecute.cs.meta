@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a3142a5bacfe5274da5e2406507e4d43
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/MVC/Model/CausesFailureCommand/Causes/CauseNoCommandsForExecute.cs
+  uploadId: 375699

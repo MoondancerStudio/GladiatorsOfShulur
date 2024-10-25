@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 13bddef5b9db6464cbf4ed494365e508
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/Extensions/GraphicRaycasterExtension.cs
+  uploadId: 375699

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: b8d289c05b5bdb34db17c9a4adfb9960
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Trade/Data/BagTableStruct.cs
+  uploadId: 375699

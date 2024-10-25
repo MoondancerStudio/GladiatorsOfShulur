@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 360f19b8991c70348a8b1cdabceebaee
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Hero/NoFilterValidReact/NoFilterValidReactBodyPart.cs
+  uploadId: 375699

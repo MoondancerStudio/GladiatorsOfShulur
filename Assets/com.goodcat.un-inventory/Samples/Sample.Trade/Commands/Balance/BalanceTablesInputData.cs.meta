@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: ac9fa8dd1e64c0a4a8c770034c853b22
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Trade/Commands/Balance/BalanceTablesInputData.cs
+  uploadId: 375699

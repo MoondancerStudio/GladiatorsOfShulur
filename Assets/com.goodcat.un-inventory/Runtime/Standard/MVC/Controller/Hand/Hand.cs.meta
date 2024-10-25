@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 89ddfe8db219c49438ceb7ecd50fd77d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Standard/MVC/Controller/Hand/Hand.cs
+  uploadId: 375699

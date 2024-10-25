@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d67a6ba4ceec57344a0954e4f3ebd0d9
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Hero/Prefabs/EntityEquipment.prefab
+  uploadId: 375699

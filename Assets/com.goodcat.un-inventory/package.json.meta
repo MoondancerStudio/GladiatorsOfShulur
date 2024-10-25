@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: db8f12c29a187fe43878be2953f81cd4
+PackageManifestImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/package.json
+  uploadId: 375699

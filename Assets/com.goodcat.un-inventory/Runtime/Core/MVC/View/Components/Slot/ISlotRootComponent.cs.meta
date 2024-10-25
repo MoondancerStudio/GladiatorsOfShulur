@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 035d08c4f7c531942b836a0a9062a7bb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/MVC/View/Components/Slot/ISlotRootComponent.cs
+  uploadId: 375699

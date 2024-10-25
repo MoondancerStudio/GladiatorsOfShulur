@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a649b17a70bc310408061f6bd06602dd
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Trade/Prefabs/BagCanvas.prefab
+  uploadId: 375699

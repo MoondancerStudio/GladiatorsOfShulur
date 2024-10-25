@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d36a4952a7398ca4e80b1c55f2e077bb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Standard/MVC/Model/DataBase/ComparerEntitiesForComparerSlots.cs
+  uploadId: 375699

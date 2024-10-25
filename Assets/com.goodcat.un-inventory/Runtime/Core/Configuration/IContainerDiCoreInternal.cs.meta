@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 0c2deb72261454e4a80b22a6133cd7c2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/Configuration/IContainerDiCoreInternal.cs
+  uploadId: 375699

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a5a4be53a9dd01b4bb0bd620b8bafca5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/Configuration/ContainerDi.cs
+  uploadId: 375699

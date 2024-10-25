@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3c83ce2d9c626f54da371bd2c36a3a55
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/MVC/Model/DataBase/Events/DatabaseCreateEvent.cs
+  uploadId: 375699

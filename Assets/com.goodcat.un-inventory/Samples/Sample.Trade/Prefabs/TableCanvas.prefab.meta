@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: bfd713f0b1a28664593911e50781f3fd
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Trade/Prefabs/TableCanvas.prefab
+  uploadId: 375699

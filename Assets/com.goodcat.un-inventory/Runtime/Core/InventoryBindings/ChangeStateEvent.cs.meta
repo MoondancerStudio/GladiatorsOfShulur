@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 52f340c0f76b81c40ab261342b190f26
+timeCreated: 1589969398
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Core/InventoryBindings/ChangeStateEvent.cs
+  uploadId: 375699

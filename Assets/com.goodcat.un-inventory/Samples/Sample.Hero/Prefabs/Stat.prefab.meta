@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: da1af56423022844486a228630bd66a3
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Hero/Prefabs/Stat.prefab
+  uploadId: 375699

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: fafb23f7a384ba14b9fff37a7c9ce997
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Runtime/Standard/MVC/Model/Filters/FilterCollection.cs
+  uploadId: 375699

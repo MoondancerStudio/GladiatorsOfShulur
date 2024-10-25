@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 78d4e5f12d366554dbcf2805cf43f957
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Trade/Resources/HeroBag/Belts.asset
+  uploadId: 375699

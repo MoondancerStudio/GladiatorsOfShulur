@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5b3601c5c7590ca49986839e18d74840
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/SamplesEnvironment/samples-environment.asmdef
+  uploadId: 375699

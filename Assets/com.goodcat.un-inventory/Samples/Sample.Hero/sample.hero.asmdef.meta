@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5a335b2bd2118fc4cbfe36e149018758
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 169752
+  packageName: UnInventory
+  packageVersion: 1.0
+  assetPath: Assets/com.goodcat.un-inventory/Samples/Sample.Hero/sample.hero.asmdef
+  uploadId: 375699
