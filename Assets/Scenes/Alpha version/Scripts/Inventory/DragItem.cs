@@ -105,10 +105,10 @@ public class DragItem : MonoBehaviour
                         GameObject.Find("player").transform.Find("weapon/current_weapon_eqiup").GetComponent<RawImage>().texture = transform.GetComponent<SpriteRenderer>().sprite.texture;
                      
                         transform.position = addNewPos(sr.position);
-                        sr.GetChild(0).position = addNewPos(itemPos);
 
                         sr.GetChild(0).parent = parent;
                         transform.parent = sr;
+                        parent.GetChild(0).position = addNewPos(itemPos);
                     }
                     else
                     {
