@@ -50,7 +50,7 @@ public class GameHander : MonoBehaviour
                     GameObject.Find("player").GetComponent<Unit>().init(false, new Vector2(x, y));
 
                     //Place enemy unit
-                   // GameObject.Find("enemy").gameObject.transform.position = new Vector3(2, 2, -0.1f);
+                    GameObject.Find("enemy").gameObject.transform.position = new Vector3(2, 2, -0.1f);
                   //  GameObject.Find("enemy").GetComponent<ParticleSystem>().enableEmission = false;
                 }
 
@@ -70,7 +70,7 @@ public class GameHander : MonoBehaviour
                 tiles.TryAdd(new Vector2(x, y), spawned);
             }
         }
-        _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
+        _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -_width - _height + 3.0f);
     }
 
     public Tile getTile(Vector2 pos)

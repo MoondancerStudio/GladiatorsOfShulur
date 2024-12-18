@@ -1,6 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class DummyTrainerLogic : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class DummyTrainerLogic : MonoBehaviour
 
     public int hitCount;
     private int currentCount;
+
+
+    public event EventHandler<AttackRespone.OnPlayerAttackChangedArgs> OnEnemyAttack;
 
     void Start()
     {
@@ -50,8 +55,8 @@ public class DummyTrainerLogic : MonoBehaviour
     {
         if (currentCount > hitCount && currentCount > 0)
         {
-            currentCount = hitCount;
-            ToggleTask.transform.Find("Task").GetComponent<TextMeshProUGUI>().text = $"Okozz {hitCount} sebzést a bábun!";
+         //   currentCount = hitCount;
+          //  ToggleTask.transform.Find("Task").GetComponent<TextMeshProUGUI>().text = $"Okozz {hitCount} sebzést a bábun!";
         }
         
         if(currentCount == 0)
@@ -72,29 +77,52 @@ public class DummyTrainerLogic : MonoBehaviour
 
         if (!GameObject.Find("player").GetComponent<Unit>().isPlayerTurn)
         {
+            transform.Find("active").gameObject.SetActive(true);
+            transform.Find("active").Rotate(new Vector3((float)Mathf.Sin(0.5f) * Time.timeScale, (float)Mathf.Cos(0.5f) * Time.timeScale, 0));
 
             if (Random.Range(-15, 15) % 3 == 0 && isPlayerAround() && (int)Time.time % 6 == 0)
             {
                 if (GameObject.Find("player").GetComponent<Unit>().hp > 0)
                 {
-                    float getBarValue = unitComponent.damage * 0.8f;
-                    GameObject.Find("player").GetComponent<Unit>().hp -= getBarValue;
-                    getBarValue /= 100;
-                    GameObject.Find("player").transform.Find("UI/life").GetComponent<Scrollbar>().size -= getBarValue;
-                    if (GameObject.Find("enemy").GetComponent<Animator>() != null)
-                        transform.GetComponent<Animator>().SetTrigger("attack");
+                    float damage = AttackRespone.calculateAttack(GetComponent<Unit>().stat, GameObject.Find("player").GetComponent<Unit>().stat);
+                    if (damage > 0)
+                    {
+                        float getBarValue = damage * 0.3f;
+                        GameObject.Find("player").GetComponent<Unit>().hp -= getBarValue;
+                        getBarValue /= 100;
+                        GameObject.Find("player").transform.Find("UI/life").GetComponent<Scrollbar>().size -= getBarValue;
+                        if (GameObject.Find("enemy").GetComponent<Animator>() != null)
+                            transform.GetComponent<Animator>().SetTrigger("attack");
+
+                        OnEnemyAttack?.Invoke(this, new AttackRespone.OnPlayerAttackChangedArgs
+                        {
+                            attackResult = "Hit",
+                            damage = unitComponent.damage_ * 0.8f,
+                            position = transform.position
+                        });
+                    } else
+                    {
+                        OnEnemyAttack?.Invoke(this, new AttackRespone.OnPlayerAttackChangedArgs
+                        {
+                            attackResult = "Miss",
+                        });
+                     }
                 }
-                GameObject.Find("player").GetComponent<Unit>().isPlayerTurn = !GameObject.Find("player").GetComponent<Unit>().isPlayerTurn;
+                GameObject.Find("player").GetComponent<Unit>().isPlayerTurn = true;
                 GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 255, 0, 255);
                 GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
+                transform.Find("active").gameObject.SetActive(false);
+                transform.Find("active").GetComponent<SpriteRenderer>().color = new Color32(42, 255, 0, 255);
             }
 
-            if (Random.Range(-15, 15) % 4 == 0 && (int)Time.time % 5 == 0 && currentCount == -2)
+            if (Random.Range(-15, 15) % 4 == 0 && (int)Time.time % 5 == 0) //&& currentCount == -2)
             {
                 move();
-                GameObject.Find("player").GetComponent<Unit>().isPlayerTurn = !GameObject.Find("player").GetComponent<Unit>().isPlayerTurn;
+                GameObject.Find("player").GetComponent<Unit>().isPlayerTurn = true;
                 GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 255, 0, 255);
                 GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
+                transform.Find("active").gameObject.SetActive(false);
+                transform.Find("active").GetComponent<SpriteRenderer>().color = new Color32(42, 255, 0, 255);
             }
         }
     }

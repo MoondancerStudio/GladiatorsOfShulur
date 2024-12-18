@@ -28,11 +28,16 @@ public class DragItem : MonoBehaviour
     void Start()
     {
         isDraggable = false;
+        mainCamera = Camera.main;
     }
 
     void Update()
     {
-         mainCamera = Camera.main;
+        if (isDraggable && Input.GetMouseButton(1)) 
+        {
+            GameObject.Find("Canvas").transform.Find("item_options").gameObject.SetActive(true);
+            GameObject.Find("Canvas").transform.Find("item_options").position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        }
     }
 
     void OnMouseDown()
@@ -52,6 +57,19 @@ public class DragItem : MonoBehaviour
         }
     }
 
+    void OnMouseDrag()
+    {
+        if (isDraggable)
+        {
+            transform.SetParent(null);
+            Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+            float planeDistance;
+            daggingPlane.Raycast(camRay, out planeDistance);
+            transform.position = camRay.GetPoint(planeDistance) + offset;
+        }
+    }
+
+
     private void OnMouseUp()
     {
         if (isDraggable)
@@ -59,7 +77,8 @@ public class DragItem : MonoBehaviour
             for (int i = 0; i < 12; i++)
             {
                 Transform sr = inventoryCells.transform.GetChild(i);
-                if (Vector2.Distance(transform.position, sr.position) < 0.7f)
+       
+                if (Vector2.Distance(transform.position, sr.position) < 65f)
                 {
                     if (sr.childCount > 0 && parent != sr)
                     {
@@ -72,13 +91,13 @@ public class DragItem : MonoBehaviour
                         transform.position = addNewPos(sr.position);
                         sr.GetChild(0).position = addNewPos(itemPos);
 
-                        sr.GetChild(0).parent = parent;
-                        transform.parent = sr;
+                        sr.GetChild(0).SetParent(parent);
+                        transform.SetParent(sr);
                     }
                     else
                     {
                         transform.position = addNewPos(sr.position);
-                        transform.parent = sr;
+                        transform.SetParent(sr);
 
                         if (currentWeapon.texture == transform.GetComponent<SpriteRenderer>().sprite.texture &&
                             GameObject.Find("player").transform.Find("weapon/current_weapon_eqiup") != null)
@@ -93,10 +112,11 @@ public class DragItem : MonoBehaviour
                 }
             }
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 1; i < 2; i++)
             {
                 Transform sr = equipCells.transform.GetChild(i);
-                if (Vector2.Distance(transform.position, sr.position) < 0.7f)
+
+                if (Vector2.Distance(transform.position, sr.position) < 70f)
                 {
                     if (sr.childCount > 0 && parent != sr)
                     {
@@ -106,14 +126,14 @@ public class DragItem : MonoBehaviour
                      
                         transform.position = addNewPos(sr.position);
 
-                        sr.GetChild(0).parent = parent;
-                        transform.parent = sr;
+                        sr.GetChild(0).SetParent(parent);
+                        transform.SetParent(sr);
                         parent.GetChild(0).position = addNewPos(itemPos);
                     }
                     else
                     {
                         transform.position = addNewPos(sr.position);
-                        transform.parent = sr;
+                        transform.SetParent(sr);
 
                         if (GameObject.Find("player").transform.Find("weapon/current_weapon_eqiup") == null)
                         {
@@ -122,6 +142,7 @@ public class DragItem : MonoBehaviour
                             playerCurrentWeapon.SetParent(GameObject.Find("player").transform.Find("weapon"));
                             playerCurrentWeapon.name = "current_weapon_eqiup";
                             playerCurrentWeapon.localScale = new Vector3(0.007f, 0.007f);
+                            GameObject.Find("player").GetComponent<Unit>().stat.weaponData = GetComponent<InstanceItemContainer>().item.itemType;
                         }
                     }
                     break;
@@ -130,26 +151,17 @@ public class DragItem : MonoBehaviour
 
             if (transform.parent == null)
             {
-                transform.position = new Vector3(itemPos.x, itemPos.y, -2.0f);
-                transform.parent = parent;
+                transform.position = new Vector3(itemPos.x, itemPos.y, 0);
+                Debug.Log(transform.position);
+                transform.SetParent(parent);
             }
         }
     }
 
     Vector3 addNewPos(Vector2 pos)
     {
-        return new Vector3(pos.x, pos.y, -2.0f);    
+        return new Vector3(pos.x, pos.y, 0);    
     }
 
-    void OnMouseDrag()
-    {
-        if (isDraggable)
-        {
-            transform.parent = null;
-            Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-            float planeDistance;
-            daggingPlane.Raycast(camRay, out planeDistance);
-            transform.position = camRay.GetPoint(planeDistance) + offset;
-        }
-    }
+
 }
