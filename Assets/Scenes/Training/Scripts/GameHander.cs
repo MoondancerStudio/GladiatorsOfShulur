@@ -70,7 +70,7 @@ public class GameHander : MonoBehaviour
                 tiles.TryAdd(new Vector2(x, y), spawned);
             }
         }
-        _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -_width - _height + 3.0f);
+        _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -14);
     }
 
     public Tile getTile(Vector2 pos)
