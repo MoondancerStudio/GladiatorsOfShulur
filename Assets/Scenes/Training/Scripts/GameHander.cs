@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameHander : MonoBehaviour
@@ -16,6 +17,8 @@ public class GameHander : MonoBehaviour
     [SerializeField]
     private Transform _cam;
 
+    private Unit _player;
+
     private Dictionary<Vector2, Tile> tiles;
 
     public Dictionary<Vector2, Tile> Tiles
@@ -31,6 +34,7 @@ public class GameHander : MonoBehaviour
     void Start()
     {
         tiles = new Dictionary<Vector2, Tile>();
+        _player = GameObject.Find("player").GetComponent<Unit>();
 
         for (int x = 0; x < _width; x++)
         {
@@ -94,23 +98,13 @@ public class GameHander : MonoBehaviour
     void Update()
     {
         if (!isMoveHighlighted) 
-        { 
-            Unit player = GameObject.Find("player").GetComponent<Unit>();
-
-            if (player != null)
-            {
-                if (player.moves.Count > 0)
-                {
-                    foreach (var m in player.moves)
-                    {
-                        Tile t = getTile(m);
-
-                        if (t != null)
-                            highLightTiles(t, m);         
-                    }
-                }
-            }
-        }
+        {
+            _player?.moves
+            .Select(m => (move: m, tile: getTile(m)))
+            .Where(moveData => moveData.tile != null)
+            .ToList()
+            .ForEach((moveData) => highLightTiles(moveData.tile, moveData.move));
+        }    
     }
 }
 

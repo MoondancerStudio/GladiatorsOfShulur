@@ -1,8 +1,7 @@
 ﻿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-//Vector3(365,329,-998)
-
+using System.Linq;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -36,17 +35,10 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    [System.Obsolete]
     private Transform getEmptyCell()
     {
-        for (int i = 0; i < 12; i++)
-        {
-            Transform cell = inventoryCells.transform.GetChild(i);
-
-            if (cell.GetChildCount() == 0)
-                return cell;
-            
-        }
-        return null;
+        return Enumerable.Range(0 ,12)
+            .Select(x => inventoryCells.transform.GetChild(x))
+            .FirstOrDefault(cell => cell.childCount == 0); 
     }
 }

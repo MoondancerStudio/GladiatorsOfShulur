@@ -62,7 +62,6 @@ public class AttackRespone : MonoBehaviour
        // Debug.Log(result.position.ToString());
     }
 
-
     void Update()
     {
         if (result != null) 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -25,10 +26,13 @@ public class DragItem : MonoBehaviour
 
     private Transform playerCurrentWeapon;
 
+    private GameObject _player;
+
     void Start()
     {
         isDraggable = false;
         mainCamera = Camera.main;
+        _player = GameObject.Find("player");
     }
 
     void Update()
@@ -69,7 +73,6 @@ public class DragItem : MonoBehaviour
         }
     }
 
-
     private void OnMouseUp()
     {
         if (isDraggable)
@@ -85,7 +88,7 @@ public class DragItem : MonoBehaviour
                         if (currentWeapon.texture == transform.GetComponent<SpriteRenderer>().sprite.texture)
                         {
                             currentWeapon.texture = sr.GetChild(0).GetComponent<SpriteRenderer>().sprite.texture;
-                            GameObject.Find("player").transform.Find("weapon/current_weapon_eqiup").GetComponent<RawImage>().texture = sr.GetChild(0).GetComponent<SpriteRenderer>().sprite.texture;
+                            _player.transform.Find("weapon/current_weapon_eqiup").GetComponent<RawImage>().texture = sr.GetChild(0).GetComponent<SpriteRenderer>().sprite.texture;
                         }
 
                         transform.position = addNewPos(sr.position);
@@ -100,12 +103,12 @@ public class DragItem : MonoBehaviour
                         transform.SetParent(sr);
 
                         if (currentWeapon.texture == transform.GetComponent<SpriteRenderer>().sprite.texture &&
-                            GameObject.Find("player").transform.Find("weapon/current_weapon_eqiup") != null)
+                            _player.transform.Find("weapon/current_weapon_eqiup") != null)
                         {
                             if (currentWeapon.texture != null)
                                 currentWeapon.texture = null;
 
-                            Destroy(GameObject.Find("player").transform.Find("weapon/current_weapon_eqiup").gameObject);
+                            Destroy(_player.transform.Find("weapon/current_weapon_eqiup").gameObject);
                         }
                     }
                     break;
@@ -122,7 +125,7 @@ public class DragItem : MonoBehaviour
                     {
                        
                         currentWeapon.texture = transform.GetComponent<SpriteRenderer>().sprite.texture;
-                        GameObject.Find("player").transform.Find("weapon/current_weapon_eqiup").GetComponent<RawImage>().texture = transform.GetComponent<SpriteRenderer>().sprite.texture;
+                        _player.transform.Find("weapon/current_weapon_eqiup").GetComponent<RawImage>().texture = transform.GetComponent<SpriteRenderer>().sprite.texture;
                      
                         transform.position = addNewPos(sr.position);
 
@@ -135,14 +138,15 @@ public class DragItem : MonoBehaviour
                         transform.position = addNewPos(sr.position);
                         transform.SetParent(sr);
 
-                        if (GameObject.Find("player").transform.Find("weapon/current_weapon_eqiup") == null)
+                        if (_player.transform.Find("weapon/current_weapon_eqiup") == null)
                         {
                             currentWeapon.texture = transform.GetComponent<SpriteRenderer>().sprite.texture;
-                            playerCurrentWeapon = Instantiate(currentWeapon.transform, new Vector3(GameObject.Find("player").transform.position.x, GameObject.Find("player").transform.position.y, -0.5f), Quaternion.identity);
-                            playerCurrentWeapon.SetParent(GameObject.Find("player").transform.Find("weapon"));
+                            playerCurrentWeapon = Instantiate(currentWeapon.transform, new Vector3(_player.transform.position.x, _player.transform.position.y, -0.5f), Quaternion.identity);
+                            playerCurrentWeapon.SetParent(_player.transform.Find("weapon"));
                             playerCurrentWeapon.name = "current_weapon_eqiup";
                             playerCurrentWeapon.localScale = new Vector3(0.007f, 0.007f);
-                            GameObject.Find("player").GetComponent<Unit>().stat.weaponData = GetComponent<InstanceItemContainer>().item.itemType;
+                         
+                            _player.GetComponent<Unit>().stat.weaponData = GetComponent<InstanceItemContainer>().item.itemType;
                         }
                     }
                     break;
@@ -162,6 +166,4 @@ public class DragItem : MonoBehaviour
     {
         return new Vector3(pos.x, pos.y, 0);    
     }
-
-
 }

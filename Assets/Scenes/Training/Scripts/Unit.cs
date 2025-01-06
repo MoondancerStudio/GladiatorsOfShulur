@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,6 +38,7 @@ public class Unit : MonoBehaviour
     private float moveSpeed = 5f;
     private bool outOfStamina;
     private bool ishit;
+    private GameHander _gameHandler;
 
     public static Unit unitInstance { get; private set; }
 
@@ -48,6 +50,7 @@ public class Unit : MonoBehaviour
 
     [SerializeField]
     public GameObject _hover;
+    private Transform _activeSign;
 
     private Scrollbar _enemyHP;
     private Scrollbar _playerStamina;
@@ -60,6 +63,8 @@ public class Unit : MonoBehaviour
     {
         _enemyHP = GameObject.Find("enemy").transform.Find("UI/life").GetComponent<Scrollbar>();
         _playerStamina = GameObject.Find("player").transform.Find("UI/stamina").GetComponent<Scrollbar>();
+        _activeSign = transform.Find("active");
+        _gameHandler = GameObject.Find("GameHandler").GetComponent<GameHander>();
         PlayerStamina = _playerStamina;
         ishit = false;
         isPlayerTurn = true;
@@ -113,21 +118,19 @@ public class Unit : MonoBehaviour
     }
 
     public void updateMove()
-    { 
-        possibleMoves.ForEach(possibleMove =>
-        {
-            Vector2 newPos = new Vector2(possibleMove.x + transform.position.x, possibleMove.y + transform.position.y);
-            Tile tile = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(newPos);
-
-            if (tile != null)
-            {
-                if (tile.transform.tag.Equals("tile"))
-                {
-                    moves.Add(newPos);
-                }
-            }
-        });
-        GameObject.Find("GameHandler").GetComponent<GameHander>().isMoveHighlighted = false;
+    {
+        possibleMoves
+            .Select(possibleMove =>
+             new Vector2(possibleMove.x + transform.position.x, possibleMove.y + transform.position.y))
+            .Where(newPos =>
+             {
+                Tile tile = _gameHandler.getTile(newPos);
+                return tile != null && tile.tag.Equals("tile");
+             })
+            .ToList()
+            .ForEach(x => moves.Add(x));
+           
+       _gameHandler.isMoveHighlighted = false;
     }
 
     public void Doattack(Unit enemyUnit)
@@ -136,7 +139,7 @@ public class Unit : MonoBehaviour
         // bool successAttack = (unit.baseAttack + d10) - (enemy.baseDefense + d10) > 0;
         // hovered health = enemy.actualHitPoints / enemy.maxHitPoints; (HP %)
         // float damage = (unit.baseAttack + d10) - (enemy.baseDefense + d10) / 2
-        if (enemyUnit != null)
+        if (enemyUnit)
         {
             float damage = AttackRespone.calculateAttack(stat, enemyUnit.stat);
             if (damage > 0)
@@ -180,7 +183,7 @@ public class Unit : MonoBehaviour
 
                 if (enemyUnit.hp <= 0)
                 {
-                    Tile tile = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(GameObject.Find("enemy").transform.position);
+                    Tile tile =_gameHandler.getTile(GameObject.Find("enemy").transform.position);
                     if (tile != null)
                     {
                         move = true;
@@ -203,7 +206,7 @@ public class Unit : MonoBehaviour
         Debug.Log(isPlayerTurn);
         if (moves.Count == 0 && !move && transform.name.Equals("player") && isPlayerTurn)
         {
-            transform.Find("active").gameObject.SetActive(true);
+            _activeSign.gameObject.SetActive(true);
             updateMove();
         }
         else
@@ -213,15 +216,15 @@ public class Unit : MonoBehaviour
             if (player != null && player.moves.Contains(transform.position) && !player.outOfStamina && !transform.name.Equals("player"))
             {
                 transform.Find("attack_sign").gameObject.SetActive(false);
-                GameObject.Find("player").GetComponent<Unit>().Doattack(this);
-                player.transform.Find("active").GetComponent<SpriteRenderer>().color = new Color32(255, 0, 0, 255);
+                player.GetComponent<Unit>().Doattack(this);
+                player._activeSign.GetComponent<SpriteRenderer>().color = new Color32(255, 0, 0, 255);
                 //   GetComponent<ParticleSystem>().enableEmission = true;
 
-                Tile t = GameObject.Find("GameHandler").GetComponent<GameHander>().getTile(player.transform.position);
+                Tile t =_gameHandler.getTile(player.transform.position);
 
                 if (t != null)
                 {
-                    t.tilePossibleMovesDeactivate();
+                    t?.tilePossibleMovesDeactivate();
                 }
                 player.move = true;
                 player.ishit = true;
@@ -288,8 +291,8 @@ public class Unit : MonoBehaviour
         if (ishit && (int)Time.time % 4 == 0)
         {
             ishit = !ishit;
-            transform.Find("active").gameObject.SetActive(false);
-            transform.Find("active").GetComponent<SpriteRenderer>().color = new Color32(42, 255, 0, 255);
+            _activeSign.gameObject.SetActive(false);
+            _activeSign.GetComponent<SpriteRenderer>().color = new Color32(42, 255, 0, 255);
         }
 
         if (move)
@@ -304,14 +307,14 @@ public class Unit : MonoBehaviour
                 transform.position = new Vector3((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y), -0.1f);
                 move = false;
                 moves.Clear();
-                if (transform.Find("active") != null && !ishit)
-                    transform.Find("active").gameObject.SetActive(false);
+                if (_activeSign != null && !ishit)
+                    _activeSign.gameObject.SetActive(false);
             }
         }
 
         if (moves.Count > 0 || ishit)
         {
-            transform.Find("active").Rotate(new Vector3((float)Math.Sin(0.5) * Time.timeScale, (float)Math.Cos(0.5) * Time.timeScale, 0));
+            _activeSign.Rotate(new Vector3((float)Math.Sin(0.5) * Time.timeScale, (float)Math.Cos(0.5) * Time.timeScale, 0));
         }
     }
 }

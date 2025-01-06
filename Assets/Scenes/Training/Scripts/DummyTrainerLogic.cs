@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -153,18 +154,14 @@ public class DummyTrainerLogic : MonoBehaviour
     bool isPlayerAround()
     {
         GameObject enemy = GameObject.Find("enemy");
-        if (enemy != null)
+        GameObject player = GameObject.Find("player");
+        if (enemy != null && player != null)
         {
-            foreach (var possibleMove in unitComponent.possibleMoves)
-            {
-                Vector3 newPos = new Vector2(possibleMove.x + enemy.transform.position.x, possibleMove.y + enemy.transform.position.y);
-                GameObject player = GameObject.Find("player");
-
-                if (player.transform.position.x == newPos.x && player.transform.position.y == newPos.y)
-                {
-                    return true;
-                }
-            }
+            Vector3 playerPos = player.transform.position;
+            Vector3 enemyPos = enemy.transform.position;
+            return unitComponent.possibleMoves
+                .Any(move => playerPos == new Vector3(move.x + enemyPos.x, move.y + enemyPos.y, playerPos.z));
+      
         }
         return false;
     }
