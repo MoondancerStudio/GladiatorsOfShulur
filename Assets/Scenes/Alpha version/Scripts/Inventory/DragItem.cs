@@ -1,18 +1,17 @@
-using System.Collections.Generic;
-using System.Linq;
-using Unity.Collections.LowLevel.Unsafe;
-using Unity.VisualScripting;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 public class DragItem : MonoBehaviour
 {
     public bool isDraggable;
 
     private Plane daggingPlane;
-    private Vector3 offset;
-    private Camera mainCamera;
     private Vector3 itemPos;
+    private Vector3 offset; 
+
+    private Camera mainCamera;
     private Transform parent;
 
     [SerializeField]
@@ -26,6 +25,8 @@ public class DragItem : MonoBehaviour
 
     private Transform playerCurrentWeapon;
 
+    private GameObject _itemOptionMenu;
+
     private GameObject _player;
 
     void Start()
@@ -33,15 +34,27 @@ public class DragItem : MonoBehaviour
         isDraggable = false;
         mainCamera = Camera.main;
         _player = GameObject.Find("player");
+        _itemOptionMenu = GameObject.Find("Canvas/inventory_system/item_options");
     }
 
     void Update()
     {
         if (isDraggable && Input.GetMouseButton(1)) 
         {
-            GameObject.Find("Canvas").transform.Find("item_options").gameObject.SetActive(true);
-            GameObject.Find("Canvas").transform.Find("item_options").position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            _itemOptionMenu.SetActive(true);
+            _itemOptionMenu.transform.position = new Vector3(transform.position.x, transform.position.y - 2.0f, transform.position.z);
         }
+    }
+
+    public void onItemDrop()
+    {
+        transform.SetParent(null);
+        transform.localScale = new Vector3(0.5f,0.5f,1);
+        transform.position = addNewPos(_player.transform.position);
+        transform.Translate(new Vector3(1.0f, 0, 0));
+        Debug.Log(transform.position);
+        isDraggable = false;
+        _itemOptionMenu.SetActive(false);
     }
 
     void OnMouseDown()
@@ -51,7 +64,7 @@ public class DragItem : MonoBehaviour
             daggingPlane = new Plane(mainCamera.transform.forward,
                                   transform.position);
             Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(camRay.origin, camRay.direction * 10, Color.green);
+           // Debug.DrawRay(camRay.origin, camRay.direction * 10, Color.green);
 
             float planeDistance;
             daggingPlane.Raycast(camRay, out planeDistance);
@@ -137,7 +150,7 @@ public class DragItem : MonoBehaviour
                     {
                         transform.position = addNewPos(sr.position);
                         transform.SetParent(sr);
-
+                        
                         if (_player.transform.Find("weapon/current_weapon_eqiup") == null)
                         {
                             currentWeapon.texture = transform.GetComponent<SpriteRenderer>().sprite.texture;
@@ -156,7 +169,7 @@ public class DragItem : MonoBehaviour
             if (transform.parent == null)
             {
                 transform.position = new Vector3(itemPos.x, itemPos.y, 0);
-                Debug.Log(transform.position);
+             //   Debug.Log(transform.position);
                 transform.SetParent(parent);
             }
         }

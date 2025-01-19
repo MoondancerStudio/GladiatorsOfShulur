@@ -1,7 +1,11 @@
-﻿using System;
+﻿using NUnit.Framework.Internal;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,11 +46,6 @@ public class Unit : MonoBehaviour
 
     public static Unit unitInstance { get; private set; }
 
-    void Awake()
-    {
-        if(transform.name.Equals("player"))
-              unitInstance = this;
-    }
 
     [SerializeField]
     public GameObject _hover;
@@ -54,10 +53,16 @@ public class Unit : MonoBehaviour
 
     private Scrollbar _enemyHP;
     private Scrollbar _playerStamina;
+    private IEnumerator coroutine;
 
     public Scrollbar PlayerStamina { get; private set; }
 
-    public event EventHandler<AttackRespone.OnPlayerAttackChangedArgs> OnPlayerAttack;
+    public event EventHandler<AttackResponse.OnPlayerAttackChangedArgs> OnPlayerAttack;
+    void Awake()
+    {
+        if(transform.name.Equals("player"))
+              unitInstance = this;
+    }
 
     void Start()
     {
@@ -115,6 +120,11 @@ public class Unit : MonoBehaviour
         possibleMoves.Add(new Vector2(-1,   0));
         possibleMoves.Add(new Vector2( 0,   1));
         possibleMoves.Add(new Vector2( 0, - 1));
+
+        possibleMoves.Add(new Vector2(1, 1));
+        possibleMoves.Add(new Vector2(-1, 1));
+        possibleMoves.Add(new Vector2(1, -1));
+        possibleMoves.Add(new Vector2(-1, -1));
     }
 
     public void updateMove()
@@ -139,17 +149,39 @@ public class Unit : MonoBehaviour
         // bool successAttack = (unit.baseAttack + d10) - (enemy.baseDefense + d10) > 0;
         // hovered health = enemy.actualHitPoints / enemy.maxHitPoints; (HP %)
         // float damage = (unit.baseAttack + d10) - (enemy.baseDefense + d10) / 2
+        Vector2 originPos = transform.position;
+        while (Vector3.Distance(transform.position, enemyUnit.transform.position) > 0.5f)
+        {
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                enemyUnit.transform.position,
+                0.01f * Time.deltaTime
+           );
+        }
+
+        while (Vector3.Distance(transform.position, originPos) > 0.5f)
+        {
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                originPos,
+                0.01f * Time.deltaTime
+           );
+        }
         if (enemyUnit)
         {
-            float damage = AttackRespone.calculateAttack(stat, enemyUnit.stat);
+            float damage = AttackResponse.calculateAttack(stat, enemyUnit.stat);
             if (damage > 0)
-            {
-                OnPlayerAttack?.Invoke(this, new AttackRespone.OnPlayerAttackChangedArgs
+            { 
+                OnPlayerAttack?.Invoke(this, new AttackResponse.OnPlayerAttackChangedArgs
                 {
                     attackResult = "Hit",
                     damage = damage,
-                    position = transform.position
+                    position = enemyUnit.transform.position,
+                    source_position = transform.position
+
                 });
+
+                StartCoroutine(GameUtils.damageFlashingColor(enemyUnit.GetComponent<SpriteRenderer>().color, enemyUnit.GetComponent<SpriteRenderer>()));
 
                 //  GameObject.Find("hit_result").transform.Find("Hit").gameObject.SetActive(true);
                 enemyUnit.hp -= damage * 0.1f;
@@ -192,9 +224,10 @@ public class Unit : MonoBehaviour
                 }
             } else
             {
-                OnPlayerAttack?.Invoke(this, new AttackRespone.OnPlayerAttackChangedArgs
+                OnPlayerAttack?.Invoke(this, new AttackResponse.OnPlayerAttackChangedArgs
                 {
-                    attackResult = "Miss"
+                    attackResult = "Miss",
+                    position = enemyUnit.transform.position
                 });
             }
         }
@@ -219,18 +252,21 @@ public class Unit : MonoBehaviour
                 player.GetComponent<Unit>().Doattack(this);
                 player._activeSign.GetComponent<SpriteRenderer>().color = new Color32(255, 0, 0, 255);
                 //   GetComponent<ParticleSystem>().enableEmission = true;
-
-                Tile t =_gameHandler.getTile(player.transform.position);
-
-                if (t != null)
-                {
-                    t?.tilePossibleMovesDeactivate();
-                }
+            
+                _gameHandler.getTile(player.transform.position)?.tilePossibleMovesDeactivate();
+                
                 player.move = true;
                 player.ishit = true;
                 GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
                 GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0,255,0,255);
-             //   player.isPlayerTurn = true;
+                //   player.isPlayerTurn = true;
+                foreach (KeyValuePair<Vector2, Tile> item in GameObject.Find("GameHandler").GetComponent<GameHander>().Tiles)
+                {
+                    Tile tile = item.Value.ConvertTo<Tile>();
+
+                    if (tile._highlight.activeSelf)
+                        tile._highlight.SetActive(false);
+                }
             }
         }
         
@@ -248,7 +284,6 @@ public class Unit : MonoBehaviour
         transform.Find("attack_sign")?.gameObject.SetActive(false);
     }
 
-    [Obsolete]
     void Update()
     {
 

@@ -15,11 +15,12 @@ public class DummyTrainerLogic : MonoBehaviour
     [SerializeField]
     private GameObject _enemyGo;
 
+    private GameObject _playerGo;
+
     public int hitCount;
     private int currentCount;
 
-
-    public event EventHandler<AttackRespone.OnPlayerAttackChangedArgs> OnEnemyAttack;
+    public event EventHandler<AttackResponse.OnPlayerAttackChangedArgs> OnEnemyAttack;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class DummyTrainerLogic : MonoBehaviour
         unitComponent.fillPossibleMoves();
         hitCount = 10;
         currentCount = 10;
+        _playerGo = GameObject.Find("player");
     }
 
     public void click()
@@ -54,6 +56,7 @@ public class DummyTrainerLogic : MonoBehaviour
 
     void Update()
     {
+
         if (currentCount > hitCount && currentCount > 0)
         {
          //   currentCount = hitCount;
@@ -76,50 +79,74 @@ public class DummyTrainerLogic : MonoBehaviour
             currentCount = -3;
         }
 
-        if (!GameObject.Find("player").GetComponent<Unit>().isPlayerTurn)
+        if (!_playerGo.GetComponent<Unit>().isPlayerTurn)
         {
             transform.Find("active").gameObject.SetActive(true);
             transform.Find("active").Rotate(new Vector3((float)Mathf.Sin(0.5f) * Time.timeScale, (float)Mathf.Cos(0.5f) * Time.timeScale, 0));
 
             if (Random.Range(-15, 15) % 3 == 0 && isPlayerAround() && (int)Time.time % 6 == 0)
             {
-                if (GameObject.Find("player").GetComponent<Unit>().hp > 0)
+                if (_playerGo.GetComponent<Unit>().hp > 0)
                 {
-                    float damage = AttackRespone.calculateAttack(GetComponent<Unit>().stat, GameObject.Find("player").GetComponent<Unit>().stat);
+                    Vector2 originPos = _enemyGo.transform.position;
+                    while (Vector3.Distance(_enemyGo.transform.position, _playerGo.transform.position) > 0.1f)
+                    {
+                        _enemyGo.transform.position = Vector3.MoveTowards(
+                            _enemyGo.transform.position,
+                            _playerGo.transform.position,
+                            0.001f * Time.deltaTime
+                       );
+                    }
+
+                    while (Vector3.Distance(_enemyGo.transform.position, originPos) > 0.1f)
+                    {
+                        _enemyGo.transform.position = Vector3.MoveTowards(
+                            _enemyGo.transform.position,
+                            originPos,
+                            0.001f * Time.deltaTime
+                       );
+                    }
+                    transform.position = new Vector3((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y), -0.1f);
+                    float damage = AttackResponse.calculateAttack(GetComponent<Unit>().stat, _playerGo.GetComponent<Unit>().stat);
                     if (damage > 0)
                     {
+                        StartCoroutine(GameUtils.damageFlashingColor(_playerGo.GetComponent<SpriteRenderer>().color, _playerGo.GetComponent<SpriteRenderer>()));
+
                         float getBarValue = damage * 0.3f;
-                        GameObject.Find("player").GetComponent<Unit>().hp -= getBarValue;
+                        _playerGo.GetComponent<Unit>().hp -= getBarValue;
                         getBarValue /= 100;
-                        GameObject.Find("player").transform.Find("UI/life").GetComponent<Scrollbar>().size -= getBarValue;
+                        GameObject.Find("Canvas/player_ui/Life").GetComponent<Scrollbar>().size -= getBarValue;
                         if (GameObject.Find("enemy").GetComponent<Animator>() != null)
                             transform.GetComponent<Animator>().SetTrigger("attack");
 
-                        OnEnemyAttack?.Invoke(this, new AttackRespone.OnPlayerAttackChangedArgs
+                        OnEnemyAttack?.Invoke(this, new AttackResponse.OnPlayerAttackChangedArgs
                         {
                             attackResult = "Hit",
                             damage = unitComponent.damage_ * 0.8f,
-                            position = transform.position
+                            position = _playerGo.transform.position
                         });
-                    } else
+                    }
+                    else
                     {
-                        OnEnemyAttack?.Invoke(this, new AttackRespone.OnPlayerAttackChangedArgs
+                        OnEnemyAttack?.Invoke(this, new AttackResponse.OnPlayerAttackChangedArgs
                         {
                             attackResult = "Miss",
+                            position = _playerGo.transform.position
                         });
-                     }
+                    }
                 }
-                GameObject.Find("player").GetComponent<Unit>().isPlayerTurn = true;
+                _playerGo.GetComponent<Unit>().isPlayerTurn = true;
                 GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 255, 0, 255);
                 GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
                 transform.Find("active").gameObject.SetActive(false);
                 transform.Find("active").GetComponent<SpriteRenderer>().color = new Color32(42, 255, 0, 255);
             }
 
-            if (Random.Range(-15, 15) % 4 == 0 && (int)Time.time % 5 == 0) //&& currentCount == -2)
+            if (Random.Range(-10, 10) % 3 == 0 && (int)Time.time % 4 == 0)
             {
                 move();
-                GameObject.Find("player").GetComponent<Unit>().isPlayerTurn = true;
+
+                _playerGo.GetComponent<Unit>().isPlayerTurn = true;
                 GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 255, 0, 255);
                 GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
                 transform.Find("active").gameObject.SetActive(false);
@@ -130,37 +157,34 @@ public class DummyTrainerLogic : MonoBehaviour
 
     void move()
     {
-       
-            int random_x = (int)(Random.Range(-5, 5));
-            int random_y = (int)(Random.Range(-5, 5));
+        int random_x = (int)(Random.Range(-5, 5));
+        int random_y = (int)(Random.Range(-5, 5));
 
-            if (!(random_x >= 0 && random_x < 5))
-            { 
-                random_x = 0;
-            }
+        if (!(random_x >= 0 && random_x < 5))
+        { 
+            random_x = 0;
+        }
 
-            if (!(random_y >= 0 && random_y < 5))
-            {
-                random_y = 0;
-            }
+        if (!(random_y >= 0 && random_y < 5))
+        {
+            random_y = 0;
+        }
 
-            unitComponent.pos = new Vector2(random_x, random_y);
+        unitComponent.pos = new Vector2(random_x, random_y);
           
-            if (unitComponent.pos.x > 0 || unitComponent.pos.y > 0)
-              unitComponent.move = true;
-       
+        if (unitComponent.pos.x > 0 || unitComponent.pos.y > 0)
+            unitComponent.move = true;
     }
 
     bool isPlayerAround()
     {
-        GameObject enemy = GameObject.Find("enemy");
-        GameObject player = GameObject.Find("player");
-        if (enemy != null && player != null)
+        if (_enemyGo != null && _playerGo != null)
         {
-            Vector3 playerPos = player.transform.position;
-            Vector3 enemyPos = enemy.transform.position;
+            Vector3 playerPos = _playerGo.transform.position;
+            Vector3 enemyPos = _enemyGo.transform.position;
             return unitComponent.possibleMoves
-                .Any(move => playerPos == new Vector3(move.x + enemyPos.x, move.y + enemyPos.y, playerPos.z));
+                .Any(move => playerPos == new Vector3(move.x + enemyPos.x,
+                                         move.y + enemyPos.y, playerPos.z));
       
         }
         return false;

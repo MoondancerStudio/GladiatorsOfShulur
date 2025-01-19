@@ -11,7 +11,6 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField]
     public GameObject equipCells;
 
-    [System.Obsolete]
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent(out InstanceItemContainer foundItem))
