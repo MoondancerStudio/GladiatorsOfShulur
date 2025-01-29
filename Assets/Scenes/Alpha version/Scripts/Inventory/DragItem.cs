@@ -52,9 +52,17 @@ public class DragItem : MonoBehaviour
         transform.localScale = new Vector3(0.5f,0.5f,1);
         transform.position = addNewPos(_player.transform.position);
         transform.Translate(new Vector3(1.0f, 0, 0));
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
         isDraggable = false;
         _itemOptionMenu.SetActive(false);
+    }
+
+    public void onItemEqiup()
+    {
+        transform.position = addNewPos(equipCells.transform.GetChild(1).transform.position);
+        transform.SetParent(equipCells.transform.GetChild(1));
+        _itemOptionMenu.SetActive(false);
+
     }
 
     void OnMouseDown()

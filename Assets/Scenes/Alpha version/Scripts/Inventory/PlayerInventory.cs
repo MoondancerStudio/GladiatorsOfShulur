@@ -19,9 +19,10 @@ public class PlayerInventory : MonoBehaviour
             if (cell != null)
             {
                 Debug.Log($"Stored {foundItem} in the inventory!");
-              //  inventory.AddItem(foundItem.TakeItem());
-
-                other.AddComponent<Image>().sprite = other.GetComponent<SpriteRenderer>().sprite;
+             
+                var getSpriteRenderer = other.GetComponent<SpriteRenderer>();
+                if (other.GetComponent<Image>() == null)
+                    other.AddComponent<Image>().sprite = getSpriteRenderer?.sprite;
                 other.GetComponent<DragItem>().isDraggable = true;  
              
                 other.transform.position = new Vector3(cell.transform.position.x, cell.transform.position.y, 0);

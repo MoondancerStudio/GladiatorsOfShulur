@@ -57,7 +57,12 @@ public class Unit : MonoBehaviour
 
     public Scrollbar PlayerStamina { get; private set; }
 
+
+    // OnAttack, onMove, onDie, onTurn, onEqiup, onDrop
+    // GameElemenets => UI, GameController, Units
+    // GameElements.units[i].onMove += ....
     public event EventHandler<AttackResponse.OnPlayerAttackChangedArgs> OnPlayerAttack;
+   
     void Awake()
     {
         if(transform.name.Equals("player"))
@@ -109,8 +114,6 @@ public class Unit : MonoBehaviour
         pos = new Vector2(e.position.x, e.position.y);
         move = true;
         isPlayerTurn = false;
-        GameObject.Find("Canvas").transform.Find("player_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 0, 0, 255);
-        GameObject.Find("Canvas").transform.Find("enemy_turn").GetComponent<TextMeshProUGUI>().faceColor = new Color32(0, 255, 0, 255);
     }
 
     // Possible moves for default unit, could be vary for different type of unit

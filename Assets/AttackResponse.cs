@@ -3,11 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 
 public class AttackResponse : MonoBehaviour
@@ -34,7 +31,7 @@ public class AttackResponse : MonoBehaviour
     {
         player = GameObject.Find("player").GetComponent<Unit>();
         enemy = GameObject.Find("enemy").GetComponent<DummyTrainerLogic>();
-     
+
         player.OnPlayerAttack += OnAtttack;
         enemy.OnEnemyAttack += OnAtttack;
     }
@@ -75,18 +72,20 @@ public class AttackResponse : MonoBehaviour
 
          yield return new WaitWhile(() =>
         {
-          //  print("process" + " " + hitResult.position.x);
-
-            if (hitResult.position.x <= 450.0f)
+            //  print("process" + " " + hitResult.position.x);
+            if (hitResult != null)
             {
-                return true;
+                if (hitResult.position.x <= 450.0f)
+                {
+                    return true;
+                }
+                else
+                {
+                    Destroy(hitResult.gameObject);
+                    return false;
+                }
             }
-            else
-            {
-                hitResult.parent = null;
-                return false;
-            }
-
+            return false;
         });
       //  print("Finish");
     }

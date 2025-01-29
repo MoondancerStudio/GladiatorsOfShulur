@@ -675,7 +675,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 107209923}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1215786597}
+        m_TargetAssemblyTypeName: DragItem, Assembly-CSharp
+        m_MethodName: onItemEqiup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &107209923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3770,6 +3782,7 @@ GameObject:
   - component: {fileID: 822750411}
   - component: {fileID: 822750410}
   - component: {fileID: 822750409}
+  - component: {fileID: 822750413}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3866,6 +3879,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &822750413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822750408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d261ed2b9b5094439a55104cd32e549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyTurn: {fileID: 0}
+  _playerTurn: {fileID: 0}
 --- !u!1 &847774055
 GameObject:
   m_ObjectHideFlags: 0
@@ -6376,7 +6403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1522792560
 RectTransform:
   m_ObjectHideFlags: 0
